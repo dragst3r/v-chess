@@ -35,9 +35,9 @@ const Field: React.FC<Props> = ({ item, move, selectedField, select }) => {
   return (
     <div
       onClick={handleClick}
-      className={`field ${selectedField.id === item.id ? "selected" : ""}`}
+      className={`field ${selectedField.row === item.row&&selectedField.column === item.column ? "selected" : ""}`}
     >
-      {item.state !== "" ? <Figure /> : null}
+      {item.state !== "" ? <Figure figure={item.state} /> : null}
     </div>
   );
 };

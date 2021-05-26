@@ -3,8 +3,8 @@
     background-color: #000;
     width: 600px;
     height: 600px;
-    grid-template-columns: repeat(13,1fr);
-    grid-template-rows: repeat(13,1fr);;
+    grid-template-columns: repeat(11,1fr);
+    grid-template-rows: repeat(11,1fr);;
     gap: 1px;
     z-index: -1;
 

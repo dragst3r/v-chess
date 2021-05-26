@@ -12,20 +12,22 @@ interface Props {
 const Board: React.FC<Props> = ({ board, updateBoard }) => {
   const [boardState, setBoardState] = useState<iField[]>(board);
   const [selectedField, setSelectedField] = useState<iField>({
-    id: 0,
+    row:0,
+    column:0,
     state: "",
   });
 
   const moveFigure = (item: iField) => {
     let newBoard = boardState.map((i) =>
-      i.id === item.id
+    i.row===item.row&&i.column===item.column
         ? { ...i, state: selectedField.state }
-        : i.id === selectedField.id
+        : i.row===selectedField.row&&i.column===selectedField.column
         ? { ...i, state: "" }
         : i
     );
     setBoardState(newBoard);
-    setSelectedField({ id: 0, state: "" });
+    setSelectedField({ row:0,
+      column:0, state: "" });
   };
   return (
     <div>
@@ -35,7 +37,7 @@ const Board: React.FC<Props> = ({ board, updateBoard }) => {
             selectedField={selectedField}
             select={setSelectedField}
             move={moveFigure}
-            key={m.id}
+            key={`R${m.row}C${m.column}`}
             position={i}
             item={m}
           />
