@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { iField } from "../../App";
+import { iField } from "../board/board.component";
+
 import Figure from "../figure/figure.component";
 
 import "./field.styles.css";
@@ -18,6 +19,7 @@ const Field: React.FC<Props> = ({ item, move, selectedField, select }) => {
     if (selectedField.state === "" && item.state === "") return;
     //Set this field as selected
     if (selectedField.state === "" && item.state !== "") {
+      // +Add checking for which player's turn is
       select(item);
       return;
     }
@@ -28,6 +30,7 @@ const Field: React.FC<Props> = ({ item, move, selectedField, select }) => {
     }
     //Change selected
     if (selectedField.state !== "" && item.state !== "") {
+      // +Add checking for which player's turn is
       select(item);
       return;
     }

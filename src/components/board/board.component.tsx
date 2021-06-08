@@ -1,33 +1,40 @@
 import React, { useState } from "react";
 import Field from "../field/field.component";
-import Figure from "../figure/figure.component";
-import { iField } from "../../App";
 import "./board.styles.css";
+import { validateMove } from "../../utility/fields.utility";
+import { initialBoard } from "../../utility/static.utility";
+import { iPlayer } from "../player/player.component";
 
 interface Props {
-  board: iField[];
-  updateBoard: (item: iField) => void;
+  newTurn: () => void
+}
+export interface iField {
+  row: number;
+  column: number;
+  state: string;
 }
 
-const Board: React.FC<Props> = ({ board, updateBoard }) => {
-  const [boardState, setBoardState] = useState<iField[]>(board);
+const Board: React.FC<Props> = ({newTurn}) => {
+  const [boardState, setBoardState] = useState<iField[]>(initialBoard());
   const [selectedField, setSelectedField] = useState<iField>({
-    row:0,
-    column:0,
+    row: -1,
+    column: -1,
     state: "",
   });
 
-  const moveFigure = (item: iField) => {
-    let newBoard = boardState.map((i) =>
-    i.row===item.row&&i.column===item.column
-        ? { ...i, state: selectedField.state }
-        : i.row===selectedField.row&&i.column===selectedField.column
-        ? { ...i, state: "" }
-        : i
-    );
-    setBoardState(newBoard);
-    setSelectedField({ row:0,
-      column:0, state: "" });
+  const moveFigure = (item: iField): void => {
+    if (validateMove(selectedField, item, boardState)) {
+      let newBoard = boardState.map((i) =>
+        i.row === item.row && i.column === item.column
+          ? { ...i, state: selectedField.state }
+          : i.row === selectedField.row && i.column === selectedField.column
+          ? { ...i, state: "" }
+          : i
+      );
+      setBoardState(newBoard);
+      setSelectedField({ row: -1, column: -1, state: "" });
+      newTurn()
+    }
   };
   return (
     <div>

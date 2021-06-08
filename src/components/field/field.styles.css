@@ -1,6 +1,7 @@
 .field{
     background-color: beige;
     transition: 300ms;
+    height: 100%;
 }
 .field:hover{
     background-color: burlywood;

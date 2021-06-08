@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import KingFigure from "../../king-figure.svg";
 import VikingFigure from "../../viking-figure.svg";
 import KnightFigure from "../../knight-figure.svg";
+import CastleFigure from "../../castle-figure.svg";
 import "./figure.styles.css";
 
 interface Props {
@@ -21,6 +22,8 @@ const Figure: React.FC<Props> = ({ figure }) => {
           ? KnightFigure
           : figure.match(/viking*/)
           ? VikingFigure
+          : figure.match(/kastle*/)
+          ? CastleFigure
           : ""
       }
       className="figure"
