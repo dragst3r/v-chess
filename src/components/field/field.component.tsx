@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useTurn, useTurnUpdate } from "../../utility/turn-context";
 import { iField } from "../board/board.component";
 
 import Figure from "../figure/figure.component";
@@ -14,6 +15,9 @@ interface Props {
 }
 
 const Field: React.FC<Props> = ({ item, move, selectedField, select }) => {
+  const turn = useTurn();
+  const updateTurn = useTurnUpdate();
+
   const handleClick = () => {
     //Empty field, nothing selected
     if (selectedField.state === "" && item.state === "") return;
@@ -26,6 +30,7 @@ const Field: React.FC<Props> = ({ item, move, selectedField, select }) => {
     //Move selected figure to new filed
     if (selectedField.state !== "" && item.state === "") {
       move(item);
+      updateTurn();
       return;
     }
     //Change selected
@@ -35,10 +40,28 @@ const Field: React.FC<Props> = ({ item, move, selectedField, select }) => {
       return;
     }
   };
+  // class for selected field
+  const selected = () =>
+    selectedField.row === item.row && selectedField.column === item.column
+      ? "selected"
+      : "";
+  const isMyTurn = (): boolean =>
+    item.state.charAt(0) === turn.figure.charAt(0) || item.state === "";
+
+  const [myTurn, setMyTurn] = useState(isMyTurn());
+  useEffect(() => {
+    console.log(isMyTurn())
+    setMyTurn(isMyTurn());
+  }, [turn]);
+  const selectable = () => {
+    if (myTurn && item.state !== "") return " selectable";
+    return "";
+  };
+
   return (
     <div
-      onClick={handleClick}
-      className={`field ${selectedField.row === item.row&&selectedField.column === item.column ? "selected" : ""}`}
+      onClick={isMyTurn() ? handleClick : () => {}}
+      className={`field ${selected() + selectable()}`}
     >
       {item.state !== "" ? <Figure figure={item.state} /> : null}
     </div>

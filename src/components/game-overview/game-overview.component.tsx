@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { TurnContextProvider } from "../../utility/turn-context";
 import Board from "../board/board.component";
 import { iPlayer } from "../player/player.component";
 import PlayersOverview from "../players-overview/players-overview.component";
@@ -20,13 +21,14 @@ const GameOverview: React.FC<Props> = () => {
     setTurn({ ...players[newPlayerIndex], index: newPlayerIndex });
   };
   return (
-    <div className="game-overview">
-      <Board newTurn={newTurn}/>
-      <PlayersOverview
-        currentTurn={turn}
-        players={players.map((i, index) => ({ ...i, index: index }))}
-      />
-    </div>
+    <TurnContextProvider>
+      <div className="game-overview">
+        <Board newTurn={newTurn} />
+        <PlayersOverview
+          players={players.map((i, index) => ({ ...i, index: index }))}
+        />
+      </div>
+    </TurnContextProvider>
   );
 };
 export default GameOverview;

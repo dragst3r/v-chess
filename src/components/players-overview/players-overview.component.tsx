@@ -4,15 +4,15 @@ import "./players-overview.styles.css";
 
 interface Props {
   players: iPlayer[];
-  currentTurn: iPlayer
 }
 
-const PlayersOverview: React.FC<Props> = ({ players, currentTurn }) => {
+const PlayersOverview: React.FC<Props> = ({ players }) => {
+
   const [player1, player2] = players;
   return (
     <div> 
-      <Player myTurn={currentTurn.index===player1.index} player={player1} />
-      <Player myTurn={currentTurn.index===player2.index} player={player2}  />
+      <Player player={player1} />
+      <Player player={player2}  />
     </div>
   );
 };
