@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useTurn, useTurnUpdate } from "../../utility/turn-context";
 import { iField } from "../board/board.component";
 
@@ -14,58 +14,73 @@ interface Props {
   selectedField: iField;
 }
 
-const Field: React.FC<Props> = ({ item, move, selectedField, select }) => {
+const Field: React.FC<Props> = ({
+  item,
+  move,
+  selectedField,
+  select,
+  position,
+}) => {
   const turn = useTurn();
   const updateTurn = useTurnUpdate();
 
   const handleClick = () => {
     //Empty field, nothing selected
     if (selectedField.state === "" && item.state === "") return;
-    //Set this field as selected
-    if (selectedField.state === "" && item.state !== "") {
-      // +Add checking for which player's turn is
-      select(item);
-      return;
-    }
+
     //Move selected figure to new filed
-    if (selectedField.state !== "" && item.state === "") {
+    if (
+      selectedField.state !== "" &&
+      item.state === "" &&
+      (selectedField.column === item.column || selectedField.row === item.row)
+    ) {
       move(item);
-      updateTurn();
       return;
     }
     //Change selected
-    if (selectedField.state !== "" && item.state !== "") {
+    if (item.state !== "") {
       // +Add checking for which player's turn is
       select(item);
       return;
     }
   };
   // class for selected field
-  const selected = () =>
+  const selectedCheck = () =>
     selectedField.row === item.row && selectedField.column === item.column
-      ? "selected"
+      ? " selected"
       : "";
-  const isMyTurn = (): boolean =>
-    item.state.charAt(0) === turn.figure.charAt(0) || item.state === "";
+  const isMyTurn = (): boolean => {
+    return item.state.charAt(0) === turn.figure.charAt(0) || item.state === "";
+  };
 
-  const [myTurn, setMyTurn] = useState(isMyTurn());
-  useEffect(() => {
-    console.log(isMyTurn())
-    setMyTurn(isMyTurn());
-  }, [turn]);
-  const selectable = () => {
+  const selectableCheck = (myTurn: boolean) => {
     if (myTurn && item.state !== "") return " selectable";
     return "";
   };
+  const [selectable, setSelectable] = useState("");
+  const [selected, setSelected] = useState(selectedCheck());
+  useEffect(() => {
+    setSelected(selectedCheck());
+  }, [selectedField]);
+
+  const [myTurn, setMyTurn] = useState(false);
+
+  useEffect(() => {
+    let myTurn = isMyTurn();
+    setMyTurn(myTurn);
+    setSelectable(selectableCheck(myTurn));
+  }, [turn]);
 
   return (
     <div
-      onClick={isMyTurn() ? handleClick : () => {}}
-      className={`field ${selected() + selectable()}`}
+      onClick={myTurn ? handleClick : () => {}}
+      className={`field${selected + selectable}`}
     >
-      {item.state !== "" ? <Figure figure={item.state} /> : null}
+      {item.state !== "" && <Figure figure={item.state} />}
     </div>
   );
 };
 
 export default React.memo(Field);
+//`field${selected + selectable}`
+//onClick={myTurn ? handleClick : () => {}} className={`field${selected + selectable}`}

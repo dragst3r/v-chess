@@ -6,13 +6,11 @@ interface Props {
   players: iPlayer[];
 }
 
-const PlayersOverview: React.FC<Props> = ({ players }) => {
-
-  const [player1, player2] = players;
+const PlayersOverview: React.FC<Props> = ({ players: [player1, player2] }) => {
   return (
-    <div> 
+    <div>
       <Player player={player1} />
-      <Player player={player2}  />
+      <Player player={player2} />
     </div>
   );
 };

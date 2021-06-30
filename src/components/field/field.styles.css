@@ -3,13 +3,17 @@
   transition: 300ms;
   height: 100%;
 }
-.field:hover {
+.selectable {
+  background-color: rgb(238, 186, 119);
+
+}
+.selectable:hover {
   background-color: burlywood;
 }
-.selectable {
-    box-shadow: 0 0 40px 20px #0ff;
-  }
-  
+
 .selected {
-  background-color: burlywood;
+  background-color: rgb(255, 0, 0);
+}
+.selected:hover {
+  background-color: rgb(255, 0, 0);
 }

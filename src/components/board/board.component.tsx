@@ -4,9 +4,9 @@ import "./board.styles.css";
 import { validateMove } from "../../utility/fields.utility";
 import { initialBoard } from "../../utility/static.utility";
 import { iPlayer } from "../player/player.component";
+import { useTurnUpdate } from "../../utility/turn-context";
 
 interface Props {
-  newTurn: () => void
 }
 export interface iField {
   row: number;
@@ -14,14 +14,14 @@ export interface iField {
   state: string;
 }
 
-const Board: React.FC<Props> = ({newTurn}) => {
+const Board: React.FC<Props> = () => {
   const [boardState, setBoardState] = useState<iField[]>(initialBoard());
   const [selectedField, setSelectedField] = useState<iField>({
     row: -1,
     column: -1,
     state: "",
   });
-
+  const updateTurn = useTurnUpdate()
   const moveFigure = (item: iField): void => {
     if (validateMove(selectedField, item, boardState)) {
       let newBoard = boardState.map((i) =>
@@ -33,7 +33,7 @@ const Board: React.FC<Props> = ({newTurn}) => {
       );
       setBoardState(newBoard);
       setSelectedField({ row: -1, column: -1, state: "" });
-      newTurn()
+      updateTurn()
     }
   };
   return (

@@ -7,11 +7,12 @@ export const TurnUpdateContext = React.createContext(()=>{});
 export const useTurn = () => useContext(TurnContext)
 export const useTurnUpdate = () => useContext(TurnUpdateContext)
 
+export const players = [
+  { displayName: "Andrzej Tester", figure: "king" },
+  { displayName: "Kamil Tester", figure: "viking" },
+];
 export const TurnContextProvider: React.FC = ({ children }) => {
-  const players = [
-    { displayName: "Andrzej Tester", figure: "king" },
-    { displayName: "Kamil Tester", figure: "viking" },
-  ];
+
   const [turn, setTurn] = useState<iPlayer>({ ...players[0], index: 0 });
   const newTurn = () => {
     let newPlayerIndex: number;
