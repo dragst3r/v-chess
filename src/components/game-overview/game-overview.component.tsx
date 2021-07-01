@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { players, TurnContextProvider, useTurn, useTurnUpdate } from "../../utility/turn-context";
+import { players, TurnContextProvider} from "../../utility/turn-context";
 import Board from "../board/board.component";
 import { iPlayer } from "../player/player.component";
 import PlayersOverview from "../players-overview/players-overview.component";
@@ -8,8 +8,7 @@ import "./game-overview.styles.css";
 interface Props {}
 
 const GameOverview: React.FC<Props> = () => {
-  const turn = useTurn();
-  const updateTurn = useTurnUpdate();
+
   return (
     <TurnContextProvider>
       <div className="game-overview">

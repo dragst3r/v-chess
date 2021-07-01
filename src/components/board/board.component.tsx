@@ -12,6 +12,7 @@ export interface iField {
   row: number;
   column: number;
   state: string;
+  index: number
 }
 
 const Board: React.FC<Props> = () => {
@@ -20,11 +21,12 @@ const Board: React.FC<Props> = () => {
     row: -1,
     column: -1,
     state: "",
+    index: -1
   });
   const updateTurn = useTurnUpdate()
   const moveFigure = (item: iField): void => {
     if (validateMove(selectedField, item, boardState)) {
-      let newBoard = boardState.map((i) =>
+      let newBoard = boardState.map((i, index) =>
         i.row === item.row && i.column === item.column
           ? { ...i, state: selectedField.state }
           : i.row === selectedField.row && i.column === selectedField.column
@@ -32,7 +34,7 @@ const Board: React.FC<Props> = () => {
           : i
       );
       setBoardState(newBoard);
-      setSelectedField({ row: -1, column: -1, state: "" });
+      setSelectedField({ row: -1, column: -1, state: "",index:-1 });
       updateTurn()
     }
   };

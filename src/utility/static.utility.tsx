@@ -45,7 +45,7 @@ export const initialBoard = () => {
   let board = [];
   for (let i = 0; i < 11; i++) {
     for (let j = 0; j < 11; j++) {
-      board.push({ row: i, column: j, state: figures[i][j] || "" });
+      board.push({index: i, row: i, column: j, state: figures[i][j] || "" });
     }
   }
   return board;

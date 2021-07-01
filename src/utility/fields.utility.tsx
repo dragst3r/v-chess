@@ -1,3 +1,4 @@
+import { BooleanLiteral } from "typescript";
 import { iField } from "../components/board/board.component";
 
 interface iFieldChange {
@@ -66,25 +67,56 @@ const checkForEnemy = (field1: iField, field2: iField): boolean => {
     field1.state.charAt(0) === field2.state.charAt(0) || field2.state === ""
   );
 };
+const checkForFriend = (field1: iField, field2: iField): boolean => {
+  return field1.state.charAt(0) === field2.state.charAt(0);
+};
+
+const checkForCastleRows = (index: number): boolean => {
+  let fieldsNearCastle = [1, 9, 59, 61, 111, 119];
+  return index in fieldsNearCastle;
+};
+const checkForCastleColumns = (index: number): boolean => {
+  let fieldsNearCastle = [11, 21, 49, 71, 99, 109];
+  return index in fieldsNearCastle;
+};
 
 export const checkForFights = (
   currentField: iField,
   newField: iField,
   board: iField[]
 ) => {
-  let newFieldIndex = 0;
-  for (let i = 0; i < board.length; i++) {
-    if (board[i].column === newField.column && board[i].row === newField.row) {
-      newFieldIndex = i;
-      return;
-    }
-  }
+  // for (let i = 0; i < board.length; i++) {
+  //   if (board[i].column === newField.column && board[i].row === newField.row) {
+  //     newFieldIndex = i;
+  //     return;
+  //   }
+  // }
   let fieldsToUpdate: number[] = [];
   let fieldToCheck;
+  const fight = (
+    fieldToCheck: iField,
+    castleCheck: (index: number) => boolean
+  ) => {
+    console.log('castle check')
+    if (checkForEnemy(newField, fieldToCheck)) {
+      if (castleCheck(fieldToCheck.index)) {
+        fieldsToUpdate.push(fieldToCheck.index);
+      }
+    }
+  };
 
   if (newField.row !== 0) {
-    fieldToCheck = board[newFieldIndex - 11];
-    if (checkForEnemy(newField, fieldToCheck)) {
-    }
+    fight(board[newField.index - 11], checkForCastleColumns);
   }
+  if (newField.column !== 10) {
+    fight(board[newField.index +1], checkForCastleRows);
+  }  
+  if (newField.row !== 10) {
+    fight(board[newField.index +11], checkForCastleColumns);
+  }
+  if (newField.column !== 0) {
+    fight(board[newField.index -1], checkForCastleColumns);
+  }
+
+  console.log(fieldsToUpdate)
 };
