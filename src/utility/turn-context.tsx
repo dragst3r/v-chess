@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { iPlayer } from "../components/player/player.component";
 
-export const TurnContext = React.createContext<iPlayer>({} as iPlayer);
+export const TurnContext = React.createContext({} as iPlayer);
 export const TurnUpdateContext = React.createContext(()=>{});
 
 export const useTurn = () => useContext(TurnContext)

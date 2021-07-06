@@ -1,6 +1,12 @@
 interface Figure {
   [key: number]: { [key: number]: string };
 }
+export interface iField {
+  row: number;
+  column: number;
+  state: string;
+  index: number;
+}
 
 const figures: Figure = {
   0: {
@@ -9,7 +15,8 @@ const figures: Figure = {
     4: "viking2",
     5: "viking3",
     6: "viking4",
-    7: "viking5",10: "kastle2"
+    7: "viking5",
+    10: "kastle2",
   },
   1: { 5: "viking6" },
   2: {},
@@ -37,15 +44,28 @@ const figures: Figure = {
     5: "viking22",
     6: "viking23",
     7: "viking24",
-    10: "kastle4"
+    10: "kastle4",
   },
 };
+export const defaultSelectedField = () => ({
+  row: -1,
+  column: -1,
+  state: "",
+  index: -1,
+});
 
 export const initialBoard = () => {
   let board = [];
+  let indexes = 0;
   for (let i = 0; i < 11; i++) {
     for (let j = 0; j < 11; j++) {
-      board.push({index: i, row: i, column: j, state: figures[i][j] || "" });
+      board.push({
+        index: indexes,
+        row: i,
+        column: j,
+        state: figures[i][j] || "",
+      });
+      indexes++;
     }
   }
   return board;

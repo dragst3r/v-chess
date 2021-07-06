@@ -1,5 +1,4 @@
-import { BooleanLiteral } from "typescript";
-import { iField } from "../components/board/board.component";
+import { iField } from "./static.utility";
 
 interface iFieldChange {
   currentField: iField;
@@ -97,7 +96,6 @@ export const checkForFights = (
     fieldToCheck: iField,
     castleCheck: (index: number) => boolean
   ) => {
-    console.log('castle check')
     if (checkForEnemy(newField, fieldToCheck)) {
       if (castleCheck(fieldToCheck.index)) {
         fieldsToUpdate.push(fieldToCheck.index);
@@ -117,6 +115,7 @@ export const checkForFights = (
   if (newField.column !== 0) {
     fight(board[newField.index -1], checkForCastleColumns);
   }
-
   console.log(fieldsToUpdate)
+   return fieldsToUpdate
+
 };

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import useMoveFigure from "../../utility/hooks/use-move-figure";
+import { useSelectedField } from "../../utility/selected-field-context";
+import { iField } from "../../utility/static.utility";
 import { useTurn, useTurnUpdate } from "../../utility/turn-context";
-import { iField } from "../board/board.component";
 
 import Figure from "../figure/figure.component";
 
@@ -9,22 +11,15 @@ import "./field.styles.css";
 interface Props {
   position: number;
   item: iField;
-  move: (item: iField) => void;
-  select: (item: iField) => void;
-  selectedField: iField;
 }
 
-const Field: React.FC<Props> = ({
-  item,
-  move,
-  selectedField,
-  select,
-  position,
-}) => {
+const Field: React.FC<Props> = ({ item, position }) => {
+  const [selectedField, setSelectedField] = useSelectedField();
   const turn = useTurn();
   const updateTurn = useTurnUpdate();
-
+  const moveFigure = useMoveFigure();
   const handleClick = () => {
+    console.log(selectedField);
     //Empty field, nothing selected
     if (selectedField.state === "" && item.state === "") return;
 
@@ -34,13 +29,14 @@ const Field: React.FC<Props> = ({
       item.state === "" &&
       (selectedField.column === item.column || selectedField.row === item.row)
     ) {
-      move(item);
+      moveFigure(item);
       return;
     }
     //Change selected
     if (item.state !== "") {
       // +Add checking for which player's turn is
-      select(item);
+      console.log("selecting");
+      setSelectedField(item);
       return;
     }
   };
@@ -76,7 +72,7 @@ const Field: React.FC<Props> = ({
       onClick={myTurn ? handleClick : () => {}}
       className={`field${selected + selectable}`}
     >
-      {item.state !== "" && <Figure figure={item.state} />}
+      {item.index}
     </div>
   );
 };
@@ -84,3 +80,5 @@ const Field: React.FC<Props> = ({
 export default React.memo(Field);
 //`field${selected + selectable}`
 //onClick={myTurn ? handleClick : () => {}} className={`field${selected + selectable}`}
+
+//item.state !== "" && <Figure figure={item.state}/>
