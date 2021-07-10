@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Field from "../field/field.component";
 import "./board.styles.css";
 import { useBoard } from "../../utility/board-context";
@@ -7,12 +7,12 @@ import { useBoard } from "../../utility/board-context";
 interface Props {}
 
 const Board: React.FC<Props> = () => {
-  const [boardState] = useBoard()
+  const [board] = useBoard()
 
   return (
     <div>
       <div className="board">
-        {boardState.map((m, i) => (
+        {board.map((m, i) => (
           <Field
             key={`R${m.row}C${m.column}`}
             position={i}

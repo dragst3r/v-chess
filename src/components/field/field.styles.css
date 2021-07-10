@@ -5,6 +5,7 @@
 }
 .selectable {
   background-color: rgb(238, 186, 119);
+  cursor: pointer;
 
 }
 .selectable:hover {

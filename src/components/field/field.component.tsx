@@ -19,7 +19,7 @@ const Field: React.FC<Props> = ({ item, position }) => {
   const updateTurn = useTurnUpdate();
   const moveFigure = useMoveFigure();
   const handleClick = () => {
-    console.log(selectedField);
+
     //Empty field, nothing selected
     if (selectedField.state === "" && item.state === "") return;
 
@@ -35,7 +35,6 @@ const Field: React.FC<Props> = ({ item, position }) => {
     //Change selected
     if (item.state !== "") {
       // +Add checking for which player's turn is
-      console.log("selecting");
       setSelectedField(item);
       return;
     }
@@ -72,7 +71,7 @@ const Field: React.FC<Props> = ({ item, position }) => {
       onClick={myTurn ? handleClick : () => {}}
       className={`field${selected + selectable}`}
     >
-      {item.index}
+      {item.state !== "" && <Figure figure={item.state}/>}
     </div>
   );
 };

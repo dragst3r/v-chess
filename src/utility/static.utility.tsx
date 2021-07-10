@@ -47,14 +47,14 @@ const figures: Figure = {
     10: "kastle4",
   },
 };
-export const defaultSelectedField = () => ({
+export const defaultSelectedField = ():iField => ({
   row: -1,
   column: -1,
   state: "",
   index: -1,
 });
 
-export const initialBoard = () => {
+export const initialBoard = ():iField[] => {
   let board = [];
   let indexes = 0;
   for (let i = 0; i < 11; i++) {

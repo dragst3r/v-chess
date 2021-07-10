@@ -9,7 +9,7 @@ const useMoveFigure = () => {
   const [boardState, setBoardState] = useBoard();
   const [selectedField, setSelectedField] = useSelectedField();
   const updateTurn = useTurnUpdate();
-  const moveFigure = (item: iField): void => {
+  const moveFigure = (item: iField) => {
     if (validateMove(selectedField, item, boardState)) {
       let boardAfterMove = boardState.map((i) => {
         if (i.index === item.index) return { ...i, state: selectedField.state };
@@ -17,12 +17,11 @@ const useMoveFigure = () => {
         return i;
       });
       let fieldsToClear = checkForFights(
-        selectedField,
         boardAfterMove[item.index],
         boardAfterMove
       );
       let boardAfterKills = boardAfterMove.map((i) => {
-        if (i.index in fieldsToClear) return { ...i, state: "" };
+        if (fieldsToClear.indexOf(i.index)>=0) return { ...i, state: "" };
         return i;
       });
       setBoardState(boardAfterKills);

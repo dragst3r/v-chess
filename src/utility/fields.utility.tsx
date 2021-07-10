@@ -1,11 +1,5 @@
 import { iField } from "./static.utility";
 
-interface iFieldChange {
-  currentField: iField;
-  newField: iField;
-  board: iField[];
-}
-
 export const validateMove = (
   currentField: iField,
   newField: iField,
@@ -66,56 +60,91 @@ const checkForEnemy = (field1: iField, field2: iField): boolean => {
     field1.state.charAt(0) === field2.state.charAt(0) || field2.state === ""
   );
 };
-const checkForFriend = (field1: iField, field2: iField): boolean => {
-  return field1.state.charAt(0) === field2.state.charAt(0);
+
+const checkForCastleRows = (
+  { state, index }: iField,
+  throne: string
+): boolean => {
+  let fieldsNearCastle =
+    state.match(/^k/) && throne !== "" // check if throne is empty and field is knight or king
+      ? [1, 9, 111, 119]
+      : [1, 9, 59, 61, 111, 119];
+  return fieldsNearCastle.indexOf(index) >= 0;
+};
+const checkForCastleColumns = (
+  { state, index }: iField,
+  throne: string
+): boolean => {
+  let fieldsNearCastle =
+    state.match(/^k/) && throne !== ""
+      ? [11, 21, 99, 109]
+      : [11, 21, 49, 71, 99, 109];
+  return fieldsNearCastle.indexOf(index) >= 0;
 };
 
-const checkForCastleRows = (index: number): boolean => {
-  let fieldsNearCastle = [1, 9, 59, 61, 111, 119];
-  return index in fieldsNearCastle;
-};
-const checkForCastleColumns = (index: number): boolean => {
-  let fieldsNearCastle = [11, 21, 49, 71, 99, 109];
-  return index in fieldsNearCastle;
-};
-
-export const checkForFights = (
-  currentField: iField,
-  newField: iField,
-  board: iField[]
-) => {
-  // for (let i = 0; i < board.length; i++) {
-  //   if (board[i].column === newField.column && board[i].row === newField.row) {
-  //     newFieldIndex = i;
-  //     return;
-  //   }
-  // }
+export const checkForFights = (newField: iField, board: iField[]): number[] => {
   let fieldsToUpdate: number[] = [];
-  let fieldToCheck;
-  const fight = (
-    fieldToCheck: iField,
-    castleCheck: (index: number) => boolean
-  ) => {
-    if (checkForEnemy(newField, fieldToCheck)) {
-      if (castleCheck(fieldToCheck.index)) {
-        fieldsToUpdate.push(fieldToCheck.index);
-      }
-    }
+  const addToKillList = (index: number): void => {
+    fieldsToUpdate.push(index);
   };
 
-  if (newField.row !== 0) {
-    fight(board[newField.index - 11], checkForCastleColumns);
-  }
-  if (newField.column !== 10) {
-    fight(board[newField.index +1], checkForCastleRows);
-  }  
-  if (newField.row !== 10) {
-    fight(board[newField.index +11], checkForCastleColumns);
-  }
-  if (newField.column !== 0) {
-    fight(board[newField.index -1], checkForCastleColumns);
-  }
-  console.log(fieldsToUpdate)
-   return fieldsToUpdate
+  const fieldsToCheck: Array<{ field: iField; direction: string }> = (() => {
+    const fields: Array<{ field: iField; direction: string }> = [];
+    if (
+      newField.row !== 0 &&
+      checkForEnemy(newField, board[newField.index - 11])
+    )
+      fields.push({ field: board[newField.index - 11], direction: "column" });
+    if (
+      newField.column !== 10 &&
+      checkForEnemy(newField, board[newField.index + 1])
+    )
+      fields.push({ field: board[newField.index + 1], direction: "row" });
+    if (
+      newField.row !== 10 &&
+      checkForEnemy(newField, board[newField.index + 11])
+    )
+      fields.push({ field: board[newField.index + 11], direction: "column" });
+    if (
+      newField.column !== 0 &&
+      checkForEnemy(newField, board[newField.index - 1])
+    )
+      fields.push({ field: board[newField.index - 1], direction: "row" });
+    return fields;
+  })();
 
+  for (let { field, direction } of fieldsToCheck) {
+    if (direction === "row") {
+      if (checkForCastleRows(field, board[60].state)) {
+        addToKillList(field.index);
+      } else {
+        if (field.column === 0 || field.column === 10) continue;
+        if (board[field.index - 1].index !== newField.index) {
+          if (checkForEnemy(field, board[field.index - 1]))
+            addToKillList(field.index);
+        }
+        if (board[field.index + 1].index !== newField.index) {
+          if (checkForEnemy(field, board[field.index + 1]))
+            addToKillList(field.index);
+        }
+      }
+    }
+    if (direction === "column") {
+      if (checkForCastleColumns(field, board[60].state)) {
+        addToKillList(field.index);
+      } else {
+        if (field.row === 0 || field.row === 10) continue;
+        if (board[field.index + 11].index !== newField.index) {
+          if (checkForEnemy(field, board[field.index + 11]))
+            addToKillList(field.index);
+        }
+        if (board[field.index - 11].index !== newField.index) {
+          if (checkForEnemy(field, board[field.index - 11]))
+            addToKillList(field.index);
+        }
+      }
+    }
+  }
+
+  return fieldsToUpdate;
 };
