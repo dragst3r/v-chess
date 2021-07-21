@@ -54,40 +54,63 @@ export const validateMove = (
   }
 };
 
-const checkForEnemy = (field1: iField, field2: iField): boolean => {
-  //Checks if are from same team or empty
-  return !(
-    field1.state.charAt(0) === field2.state.charAt(0) || field2.state === ""
-  );
-};
-
-const checkForCastleRows = (
-  { state, index }: iField,
-  throne: string
-): boolean => {
-  let fieldsNearCastle =
-    state.match(/^k/) && throne !== "" // check if throne is empty and field is knight or king
-      ? [1, 9, 111, 119]
-      : [1, 9, 59, 61, 111, 119];
-  return fieldsNearCastle.indexOf(index) >= 0;
-};
-const checkForCastleColumns = (
-  { state, index }: iField,
-  throne: string
-): boolean => {
-  let fieldsNearCastle =
-    state.match(/^k/) && throne !== ""
-      ? [11, 21, 99, 109]
-      : [11, 21, 49, 71, 99, 109];
-  return fieldsNearCastle.indexOf(index) >= 0;
-};
-
 export const checkForFights = (newField: iField, board: iField[]): number[] => {
   let fieldsToUpdate: number[] = [];
   const addToKillList = (index: number): void => {
     fieldsToUpdate.push(index);
   };
 
+  const checkForEnemy = (checkedField: iField, checkAgainst: iField): boolean => {
+    //Checks if are from same team or empty
+    return !(
+      checkedField.state.charAt(0) === checkAgainst.state.charAt(0) || checkAgainst.state === ""
+    );
+  };
+
+  const checkForCastleRows = ({ state, index }: iField): boolean => {
+    const throne = board[60].state;
+    let fieldsNearCastle =
+      state.match(/^k/) && throne !== "" // check if throne is empty and field is knight or king
+        ? [1, 9, 111, 119]
+        : [1, 9, 59, 61, 111, 119];
+    return fieldsNearCastle.indexOf(index) >= 0;
+  };
+  const checkForCastleColumns = ({ state, index }: iField): boolean => {
+    const throne = board[60].state;
+    let fieldsNearCastle =
+      state.match(/^k/) && throne !== ""
+        ? [11, 21, 99, 109]
+        : [11, 21, 49, 71, 99, 109];
+    return fieldsNearCastle.indexOf(index) >= 0;
+  };
+  const fightKing = (king: iField, selectedField: iField): boolean => {
+    const validateFight = (field: iField): boolean => {
+      console.log(selectedField);
+      if (field.index === selectedField.index) return true;
+      if (field.row === selectedField.row && checkForCastleRows(field))
+        return true;
+      if (field.column === selectedField.column && checkForCastleColumns(field))
+        return true;
+      if (checkForEnemy(king,field)) return true;
+      return false;
+    };
+    const indexesToCheck = [
+      king.index - 1,
+      king.index + 1,
+      king.index - 11,
+      king.index + 11,
+    ];
+    const fightResults: boolean[] = [];
+    for (let index of indexesToCheck) {
+      if (index < 0 || index > 120) continue;
+      if (board[index].row !== king.row && board[index].column !== king.column)
+        continue;
+      console.log("Fight", board[index].state);
+      fightResults.push(validateFight(board[index]));
+    }
+    console.log(fightResults);
+    return fightResults.every((i) => i === true);
+  };
   const fieldsToCheck: Array<{ field: iField; direction: string }> = (() => {
     const fields: Array<{ field: iField; direction: string }> = [];
     if (
@@ -114,33 +137,41 @@ export const checkForFights = (newField: iField, board: iField[]): number[] => {
   })();
 
   for (let { field, direction } of fieldsToCheck) {
+    console.log(fieldsToCheck.map((i) => i.field));
+    if (field.state === "king") {
+      console.log("Fight king");
+      const kingIsDead = fightKing(field, newField);
+      if (kingIsDead) {
+        addToKillList(field.index)
+      } else continue;
+    }
     if (direction === "row") {
-      if (checkForCastleRows(field, board[60].state)) {
+      if (checkForCastleRows(field)) {
         addToKillList(field.index);
       } else {
         if (field.column === 0 || field.column === 10) continue;
-        if (board[field.index - 1].index !== newField.index) {
-          if (checkForEnemy(field, board[field.index - 1]))
-            addToKillList(field.index);
+        const fieldBehind = board[field.index - 1];
+        if (fieldBehind.index !== newField.index) {
+          if (checkForEnemy(field, fieldBehind)) addToKillList(field.index);
         }
-        if (board[field.index + 1].index !== newField.index) {
-          if (checkForEnemy(field, board[field.index + 1]))
-            addToKillList(field.index);
+        const fieldInFrontOf = board[field.index + 1];
+        if (fieldInFrontOf.index !== newField.index) {
+          if (checkForEnemy(field, fieldInFrontOf)) addToKillList(field.index);
         }
       }
     }
     if (direction === "column") {
-      if (checkForCastleColumns(field, board[60].state)) {
+      if (checkForCastleColumns(field)) {
         addToKillList(field.index);
       } else {
         if (field.row === 0 || field.row === 10) continue;
-        if (board[field.index + 11].index !== newField.index) {
-          if (checkForEnemy(field, board[field.index + 11]))
-            addToKillList(field.index);
+        const fieldBelow = board[field.index + 11];
+        if (fieldBelow.index !== newField.index) {
+          if (checkForEnemy(field, fieldBelow)) addToKillList(field.index);
         }
-        if (board[field.index - 11].index !== newField.index) {
-          if (checkForEnemy(field, board[field.index - 11]))
-            addToKillList(field.index);
+        const fieldAbove = board[field.index - 11];
+        if (fieldAbove.index !== newField.index) {
+          if (checkForEnemy(field, fieldAbove)) addToKillList(field.index);
         }
       }
     }

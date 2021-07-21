@@ -1,4 +1,3 @@
-import React from "react";
 import { useBoard } from "../board-context";
 import { checkForFights, validateMove } from "../fields.utility";
 import { useSelectedField } from "../selected-field-context";
@@ -10,6 +9,7 @@ const useMoveFigure = () => {
   const [selectedField, setSelectedField] = useSelectedField();
   const updateTurn = useTurnUpdate();
   const moveFigure = (item: iField) => {
+    let gameOver = false;
     if (validateMove(selectedField, item, boardState)) {
       let boardAfterMove = boardState.map((i) => {
         if (i.index === item.index) return { ...i, state: selectedField.state };
@@ -21,17 +21,21 @@ const useMoveFigure = () => {
         boardAfterMove
       );
       let boardAfterKills = boardAfterMove.map((i) => {
-        if (fieldsToClear.indexOf(i.index)>=0) return { ...i, state: "" };
+        if (fieldsToClear.indexOf(i.index) >= 0) {
+          if (i.state === "king") gameOver = true;
+          return { ...i, state: "" };
+        }
         return i;
       });
       setBoardState(boardAfterKills);
       setSelectedField({ row: -1, column: -1, state: "", index: -1 });
       updateTurn();
+      if (gameOver) {
+        alert("Game over") // Add hook for finnishing game
     }
   };
 
-  return moveFigure
+  return moveFigure;
 };
 
-
-export default useMoveFigure
+export default useMoveFigure;
