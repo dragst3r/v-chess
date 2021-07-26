@@ -1,11 +1,24 @@
-.board{
-    display: grid;
-    background-color: #000;
-    width: 600px;
-    height: 600px;
-    grid-template-columns: repeat(11,1fr);
-    grid-template-rows: repeat(11,1fr);;
-    gap: 1px;
-    z-index: -1;
+.board-container {
+  width: 600px;
+  height: 600px;
+  position: relative;
+}
 
+.board {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  background-color: #000;
+  grid-template-columns: repeat(11, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  gap: 1px;
+  z-index: -1;
+}
+.victory {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: RGBA(0, 0, 0, 0.5);
 }

@@ -10,13 +10,13 @@ export interface iField {
 
 const figures: Figure = {
   0: {
-    0: "kastle1",
+    0: "",
     3: "viking1",
     4: "viking2",
     5: "viking3",
     6: "viking4",
     7: "viking5",
-    10: "kastle2",
+    10: "",
   },
   1: { 5: "viking6" },
   2: {},
@@ -38,13 +38,13 @@ const figures: Figure = {
   8: {},
   9: { 5: "viking19" },
   10: {
-    0: "kastle3",
+    0: "",
     3: "viking20",
     4: "viking21",
     5: "viking22",
     6: "viking23",
     7: "viking24",
-    10: "kastle4",
+    10: "",
   },
 };
 export const defaultSelectedField = ():iField => ({

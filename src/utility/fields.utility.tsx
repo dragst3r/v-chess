@@ -1,18 +1,30 @@
+import { iPlayer } from "../components/player/player.component";
 import { iField } from "./static.utility";
+import { useVictory } from "./victory-contex";
+  
 
 export const validateMove = (
   currentField: iField,
   newField: iField,
-  board: iField[]
-) => {
+  board: iField[],
+  setVictory: (winner: iPlayer) => void,
+  currentTurn: iPlayer
+):[boolean, boolean] => {
+  //Check if newField is one of castles
+  if ([0, 10, 110, 120].indexOf(newField.index) >= 0) {
+    if (currentField.state === "king") {
+      setVictory(currentTurn)
+      return [true,true];
+    }else return [false,false]
+  }
   //Check for vertical and horizontal moves
   if (
     currentField.row !== newField.row &&
     currentField.column !== newField.column
   )
-    return false;
+    return [false,false];
   //Check if destination is empty
-  if (newField.state !== "") return false;
+  if (newField.state !== "") return [false,false];
   let filterFrom: number;
   let filterTo: number;
   let arrayWithFieldsBetween: iField[];
@@ -32,7 +44,7 @@ export const validateMove = (
         i.column <= filterTo
     );
     //return TRUE if all field.state are empty
-    return arrayWithFieldsBetween.every((j) => j.state === "");
+    return [arrayWithFieldsBetween.every((j) => j.state === ""),false];
   }
   //Move in column
   if (currentField.column === newField.column) {
@@ -50,8 +62,9 @@ export const validateMove = (
         i.row <= filterTo
     );
     //return TRUE if all field.state are empty
-    return arrayWithFieldsBetween.every((j) => j.state === "");
+    return [arrayWithFieldsBetween.every((j) => j.state === ""), false];
   }
+  return [false,false];
 };
 
 export const checkForFights = (newField: iField, board: iField[]): number[] => {
@@ -60,10 +73,14 @@ export const checkForFights = (newField: iField, board: iField[]): number[] => {
     fieldsToUpdate.push(index);
   };
 
-  const checkForEnemy = (checkedField: iField, checkAgainst: iField): boolean => {
+  const checkForEnemy = (
+    checkedField: iField,
+    checkAgainst: iField
+  ): boolean => {
     //Checks if are from same team or empty
     return !(
-      checkedField.state.charAt(0) === checkAgainst.state.charAt(0) || checkAgainst.state === ""
+      checkedField.state.charAt(0) === checkAgainst.state.charAt(0) ||
+      checkAgainst.state === ""
     );
   };
 
@@ -91,7 +108,7 @@ export const checkForFights = (newField: iField, board: iField[]): number[] => {
         return true;
       if (field.column === selectedField.column && checkForCastleColumns(field))
         return true;
-      if (checkForEnemy(king,field)) return true;
+      if (checkForEnemy(king, field)) return true;
       return false;
     };
     const indexesToCheck = [
@@ -142,7 +159,7 @@ export const checkForFights = (newField: iField, board: iField[]): number[] => {
       console.log("Fight king");
       const kingIsDead = fightKing(field, newField);
       if (kingIsDead) {
-        addToKillList(field.index)
+        addToKillList(field.index);
       } else continue;
     }
     if (direction === "row") {

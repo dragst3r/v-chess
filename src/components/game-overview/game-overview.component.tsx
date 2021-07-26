@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { players, TurnContextProvider } from "../../utility/turn-context";
 import { BoardContextProvider } from "../../utility/board-context";
 import { SelectedFieldContextProvider } from "../../utility/selected-field-context";
+import {VictoryContextProvider} from '../../utility/victory-contex'
 import Board from "../board/board.component";
 import { iPlayer } from "../player/player.component";
 import PlayersOverview from "../players-overview/players-overview.component";
@@ -15,7 +16,9 @@ const GameOverview: React.FC<Props> = () => {
       <div className="game-overview">
         <BoardContextProvider>
           <SelectedFieldContextProvider>
-            <Board />
+            <VictoryContextProvider>
+              <Board />
+            </VictoryContextProvider>
           </SelectedFieldContextProvider>
         </BoardContextProvider>
         <PlayersOverview

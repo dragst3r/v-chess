@@ -2,15 +2,21 @@ import { useBoard } from "../board-context";
 import { checkForFights, validateMove } from "../fields.utility";
 import { useSelectedField } from "../selected-field-context";
 import { iField } from "../static.utility";
-import { useTurnUpdate } from "../turn-context";
+import { useTurn, useTurnUpdate } from "../turn-context";
+import { useVictory } from "../victory-contex";
+
 
 const useMoveFigure = () => {
+  const [,,setVictory] = useVictory()
   const [boardState, setBoardState] = useBoard();
   const [selectedField, setSelectedField] = useSelectedField();
+  const turn = useTurn()
   const updateTurn = useTurnUpdate();
   const moveFigure = (item: iField) => {
-    let gameOver = false;
-    if (validateMove(selectedField, item, boardState)) {
+    
+    const [isMoveValid, isGameOver] = validateMove(selectedField, item, boardState, setVictory,turn)
+    let gameOver = isGameOver;
+    if (isMoveValid) {
       let boardAfterMove = boardState.map((i) => {
         if (i.index === item.index) return { ...i, state: selectedField.state };
         if (i.index === selectedField.index) return { ...i, state: "" };
@@ -29,12 +35,12 @@ const useMoveFigure = () => {
       });
       setBoardState(boardAfterKills);
       setSelectedField({ row: -1, column: -1, state: "", index: -1 });
-      updateTurn();
+      updateTurn(gameOver);
       if (gameOver) {
-        alert("Game over") // Add hook for finnishing game
+        setVictory(turn) // Add hook for finnishing game
+      }
     }
   };
-
   return moveFigure;
 };
 
