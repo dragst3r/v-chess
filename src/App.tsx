@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from "react";
 import "./App.css";
-import Board from "./components/board/board.component";
-import GameOverview from "./components/game-overview/game-overview.component";
-import PlayersOverview from "./components/players-overview/players-overview.component";
+import GamePage from "./pages/game.page";
+import RoomPage from "./pages/room.page";
+
+import HomePage from "./pages/home.page";
+import Socket from "./soc";
 
 function App() {
+  //Socket()
   return (
     <div>
-      <GameOverview />
+      <RoomPage />
     </div>
   );
 }
 
 export default App;
-// Array.from(Array(11 * 11), (_, i) => {
-//     let addRow = i;
-//     let addColumn = i;
-//     return {
-//       row: addRow,
-//       column: addColumn,
-//       state: figures[addRow][addColumn] || "",
-//     };
-//   })

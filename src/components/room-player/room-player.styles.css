@@ -1,0 +1,25 @@
+.player-spot{
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    background-position: center;
+    text-align: center;
+}
+.player-spot:hover{
+    background-position: left;
+    background-size: 20%;
+    transition: 400ms;
+}
+.king{
+    background-image: url(/src/king-figure.svg);
+    background-repeat: no-repeat;
+    background-size: 30%;
+}
+.viking{
+    background-image: url(/src/viking-figure.svg);
+    background-repeat: no-repeat;
+    background-size: 30%;
+}
+.taken{
+    color: red
+}

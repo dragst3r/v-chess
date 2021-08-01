@@ -1,0 +1,16 @@
+.home-page-container{
+    display: flex;
+    flex-direction: column;
+}
+.home-page-header{
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgb(138, 138, 43);
+    height: 30px;
+    padding: 10px
+}
+.home-page-body{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
