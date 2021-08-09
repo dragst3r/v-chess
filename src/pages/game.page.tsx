@@ -10,4 +10,4 @@ const GamePage: React.FC<Props>=()=>{
     return <GameOverview />
 }
 
-export default GamePage
+export default GamePage 
