@@ -1,6 +1,5 @@
 import React from "react";
-import NewRoom from "../components/new-room/new-room.component";
-import { SocketContextProvider } from "../utility/socket-context";
+import CreateNewRoom from "../components/create-new-room/create-new-room.component";
 import "./home.styles.css";
 interface Props {}
 
@@ -11,9 +10,7 @@ const HomePage: React.FC<Props> = () => {
         <button>Sign in with Google</button>
       </div>
       <div className="home-page-body">
-        <SocketContextProvider>
-          <NewRoom />
-        </SocketContextProvider>
+        <CreateNewRoom />
       </div>
     </div>
   );
