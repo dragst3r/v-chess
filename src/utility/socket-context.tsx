@@ -9,7 +9,6 @@ const SocketContext = React.createContext(
 );
 
 const SocketContextProvider: React.FC = ({ children }) => {
-    console.log(socket)
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
   );
