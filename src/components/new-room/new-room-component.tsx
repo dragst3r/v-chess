@@ -8,6 +8,7 @@ import "./new-room.styles.css";
 interface Props {}
 
 const NewRoom: React.FC<Props> = () => {
+
   return (
     <div className="room-container">
       <RoomPlayerSpot background="king" player={undefined} />

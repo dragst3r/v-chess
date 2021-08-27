@@ -24,6 +24,7 @@ const UserContextProvider: React.FC = ({ children }) => {
 export const useUser = (): [User, (user: User) => void] => {
   const user = useContext(UserContext);
   const setUser = useContext(UpdateUserContext);
+
   return [user, setUser];
 };
 

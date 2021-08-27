@@ -4,19 +4,20 @@ import SignInAndOutButton from "../components/sign-in-and-out-button/sign-in-and
 import { auth, signInWithGoogle } from "../firebase/firebase-auth";
 import { useAuth } from "../utility/hooks/use-auth";
 import { useLogOut } from "../utility/hooks/use-logout";
+import SocketContextProvider from "../utility/socket-context";
 import { useUser } from "../utility/user-context";
 import "./home.styles.css";
 interface Props {}
 
 const HomePage: React.FC<Props> = () => {
-  useAuth()
+  useAuth();
   return (
     <div className="home-page-container">
-      <div className="home-page-header">
-        {<SignInAndOutButton />}
-      </div>
+      <div className="home-page-header">{<SignInAndOutButton />}</div>
       <div className="home-page-body">
-        <CreateNewRoom />
+        <SocketContextProvider>
+          <CreateNewRoom />
+        </SocketContextProvider>
       </div>
     </div>
   );

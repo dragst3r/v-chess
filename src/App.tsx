@@ -7,7 +7,6 @@ import UserContextProvider from "./utility/user-context";
 import { useAuth } from "./utility/hooks/use-auth";
 
 function App() {
-  useAuth()
   return (
     <UserContextProvider>
       <BrowserRouter>
@@ -15,7 +14,7 @@ function App() {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route path="/game">
+          <Route exact path="/room/:id">
             <GamePage />
           </Route>
         </Switch>
