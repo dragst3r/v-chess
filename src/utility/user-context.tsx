@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 
-type User = {
+export type User = {
+  userId: string | null;
   displayName: string | null;
   photoURL: string | null;
   email: string | null;
@@ -11,7 +12,6 @@ const UpdateUserContext = React.createContext<(user: User) => void>(() => {});
 
 const UserContextProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User>({} as User);
-
   return (
     <UserContext.Provider value={user}>
       <UpdateUserContext.Provider value={setUser}>

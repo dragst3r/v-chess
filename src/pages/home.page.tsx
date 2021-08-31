@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import CreateNewRoom from "../components/create-new-room/create-new-room.component";
+import RoomsToJoin from "../components/rooms-to-join/rooms-to-join.component";
 import SignInAndOutButton from "../components/sign-in-and-out-button/sign-in-and-out-button.component";
 import { auth, signInWithGoogle } from "../firebase/firebase-auth";
 import { useAuth } from "../utility/hooks/use-auth";
@@ -14,11 +15,12 @@ const HomePage: React.FC<Props> = () => {
   return (
     <div className="home-page-container">
       <div className="home-page-header">{<SignInAndOutButton />}</div>
-      <div className="home-page-body">
-        <SocketContextProvider>
+      <SocketContextProvider>
+        <div className="home-page-body">
           <CreateNewRoom />
-        </SocketContextProvider>
-      </div>
+          <RoomsToJoin />
+        </div>
+      </SocketContextProvider>
     </div>
   );
 };

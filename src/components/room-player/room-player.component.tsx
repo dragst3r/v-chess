@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { User } from "../../utility/user-context";
 import "./room-player.styles.css";
 
 interface Props {
-  player: {} | undefined;
+  player: User | undefined;
   background: string;
 }
 const RoomPlayerSpot: React.FC<Props> = ({ player, background }) => {
@@ -14,7 +15,7 @@ const RoomPlayerSpot: React.FC<Props> = ({ player, background }) => {
 
   return (
     <div className={`player-spot ${background}${taken ? " taken" : ""}`}>
-      Tester 1
+      {player?.displayName}
     </div>
   );
 };

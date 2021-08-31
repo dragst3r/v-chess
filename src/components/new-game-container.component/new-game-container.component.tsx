@@ -13,7 +13,7 @@ const NewGameContainer = () => {
     if(id) joinRoom(id)
   },[id])
   return (
-    <div>{id?id:'1'}
+    <div>
       <NewRoom />
     </div>
   );

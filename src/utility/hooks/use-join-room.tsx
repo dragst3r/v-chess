@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { useSocket } from "../socket-context";
-import { useParams } from 'react-router-dom';
+import { useUser } from "../user-context";
 
 export const useJoinRoom = () => {
   const [roomId, setRoomId] = useState("");
   const socket = useSocket();
-  const id = useParams()
+  const [user] = useUser();
   useEffect(() => {
-      console.log(id)
-    if (roomId) {
-        console.log(roomId)
-      socket.emit("join-room", roomId);
+    if (roomId&& user.loggedIn) {
+      console.log(roomId, user);
+      socket.emit("join-room", roomId, user.userId);
     }
-  }, [socket,roomId]);
+    if (socket.connected) {
+      socket.on("joined-room", (users) => console.log("U", users));
+      socket.on('room-closed',()=>console.log('closed room'))
+    }
+  }, [socket, roomId,user]);
   return setRoomId;
 };

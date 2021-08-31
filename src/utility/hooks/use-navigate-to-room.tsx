@@ -15,7 +15,6 @@ export const useNavigateToRoom = (): React.Dispatch<
       history.push(`/game/${roomId}`);
       saveRoom(roomId);
     }
-    return console.log(12)
   }, [roomId]);
 
   return setRoomId;

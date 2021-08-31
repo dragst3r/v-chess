@@ -14,6 +14,7 @@ export const useLogOut= ()=>{
               email: null,
               photoURL: null,
               loggedIn: false,
+              userId: null
             });
           })
           .catch((error) => {

@@ -10,8 +10,9 @@ export const useAuth = () => {
   const [, setCurrentUser] = useUser();
   useEffect(() => {
     if (user) {
-      const { displayName, email, photoURL } = user;
-      setCurrentUser({ displayName, email, photoURL, loggedIn: true });
+      const { displayName, email, photoURL, uid } = user;
+      console.log(user)
+      setCurrentUser({ displayName, email, photoURL, loggedIn: true,userId:uid });
     } 
   }, [user]);
 };

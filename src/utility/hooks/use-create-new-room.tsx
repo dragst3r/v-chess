@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { firestore } from "../../firebase/firebase-auth";
 import { useSocket } from "../socket-context";
+import { useUser } from "../user-context";
 import { useNavigateToRoom } from "./use-navigate-to-room";
 
 export const useCreateNewRoom = (): React.Dispatch<
@@ -11,6 +12,7 @@ export const useCreateNewRoom = (): React.Dispatch<
   const socket = useSocket();
   const [roomId, setRoomId] = useState("");
   const history = useHistory();
+  const [user] = useUser();
   // useEffect(() => {
   //   if (newRoom) {
   //     history.push("/game/");
@@ -18,10 +20,13 @@ export const useCreateNewRoom = (): React.Dispatch<
   //   }
   // }, [newRoom, socket]);
   useEffect(() => {
-    console.log(socket)
+    console.log(socket);
     if (socket.connected && newRoom) {
-      socket.emit("create-room", socket.id);
-      socket.on("room-created", (id:string) => history.push("/room/"+id,id));
+      socket.emit("create-room", socket.id, user.userId);
+      socket.on("room-created", (id: string, users: []) => {
+        console.log('USERS: ',users)
+        history.push("/room/" + id, id);
+      });
     }
   }, [socket, newRoom]);
 
