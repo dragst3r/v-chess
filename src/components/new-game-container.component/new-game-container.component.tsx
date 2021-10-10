@@ -8,13 +8,13 @@ import { useParams } from 'react-router-dom';
 
 const NewGameContainer = () => {
   const {id} = useParams<{id:string}>()
-  const joinRoom = useJoinRoom()
+  const [joinRoom, users] = useJoinRoom()
   useEffect(()=>{
     if(id) joinRoom(id)
   },[id])
   return (
     <div>
-      <NewRoom />
+      <NewRoom users={users} roomId = {id} />
     </div>
   );
 };
