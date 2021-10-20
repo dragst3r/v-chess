@@ -1,4 +1,6 @@
 export type PlayerServerInfo = {
-    id:string;
+    userId: string;
+    displayName: string;
+    photoURL: string;
     side: string
 }

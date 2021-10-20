@@ -18,34 +18,23 @@ const RoomsToJoin = () => {
   useEffect(() => {
     console.log(socket.connected);
     if (socket.connected) {
-      if(rooms.length==0){
-        socket.emit("get-rooms")
+      if (rooms.length == 0) {
+        socket.emit("get-rooms");
       }
-      socket.on("available-rooms", (rooms:Room[]) => {
+      socket.on("available-rooms", (rooms: Room[]) => {
         console.log("rooms: ", rooms);
         setRooms(rooms);
       });
     }
-  }, [socket,socket.connected]);
+  }, [socket, socket.connected]);
 
-  // useEffect(() => {
-  //   const fetchedRooms:string[] = [];
-  //   firestore
-  //     .collection("rooms")
-  //     .get()
-  //     .then((r) => {
-  //       r.forEach((t) => fetchedRooms.push(t.data().roomId));
-  //       setRooms([...fetchedRooms])
-  //     });
-  //     return setRooms([])
-  // }, []);
   return (
     <div className="rooms-container">
-      {rooms.length === 0 ? (
-        <div onClick={()=>console.log(socket)}> No rooms </div>
+      {!socket.connected ? (
+        <div onClick={() => console.log(socket)}> No rooms </div>
       ) : (
-        rooms.map((room, index) => (
-          <JoinRoom key={index} roomId={room.roomId} id={index} />
+        Object.keys(rooms).map((roomId, index) => (
+          <JoinRoom key={index} roomId={roomId} id={index} />
         ))
       )}
     </div>

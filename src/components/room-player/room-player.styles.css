@@ -5,11 +5,11 @@
     background-position: center;
     text-align: center;
 }
-.player-spot:hover{
+/*.player-spot:hover{
     background-position: left;
     background-size: 20%;
     transition: 400ms;
-}
+}*/
 .king{
     background-image: url(/src/king-figure.svg);
     background-repeat: no-repeat;

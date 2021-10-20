@@ -1,0 +1,9 @@
+.lobby-container{
+    width: 200px;
+    height: 50px;
+    background-color: burlywood;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}

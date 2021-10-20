@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
 import { useSocket } from "../socket-context";
+import { PlayerServerInfo } from "../types";
 import { useUser } from "../user-context";
 
-type User = {
-  id: string;
-  side: string;
-};
 
-export const useJoinRoom = ():[React.Dispatch<React.SetStateAction<string>>,User[]] => {
+
+export const useJoinRoom = (): [
+  React.Dispatch<React.SetStateAction<string>>,
+  PlayerServerInfo[]
+] => {
   const [roomId, setRoomId] = useState("");
   const socket = useSocket();
   const [user] = useUser();
-  const [users, setUsers] = useState<User[]>([{id:"0",side:"l"}]);
+  const [users, setUsers] = useState<PlayerServerInfo[]>([]);
+
   useEffect(() => {
-    if (roomId && user.loggedIn) {
-      console.log(roomId, user);
-      socket.emit("join-room", roomId, user.userId);
-    }
-    if (socket.connected) {
-      socket.on("joined-room", (users) => setUsers(users));
-      socket.on("room-closed", () => console.log("closed room"));
+    if (socket.connected && roomId && user.loggedIn) {
+      socket.emit("join-room", roomId, user);
+      socket.on("joined-room", (users:PlayerServerInfo[]) => {
+        setUsers(users);
+      });
     }
   }, [socket, roomId, user]);
+
   return [setRoomId, users];
 };

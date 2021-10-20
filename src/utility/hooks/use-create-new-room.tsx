@@ -24,7 +24,6 @@ export const useCreateNewRoom = (): React.Dispatch<
     if (socket.connected && newRoom) {
       socket.emit("create-room", socket.id, user.userId);
       socket.on("room-created", (id: string, users: []) => {
-        console.log('USERS: ',users)
         history.push("/room/" + id, id);
       });
     }
