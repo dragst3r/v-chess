@@ -1,36 +1,32 @@
-import React, { useContext, useState } from "react";
-import { iPlayer } from "../components/player/player.component";
+import React, {  useContext, useState } from "react";
+import { emptyPlayer } from "./static.utility";
+import { PlayerServerInfo } from "./types";
 
-export const TurnContext = React.createContext({} as iPlayer);
-export const TurnUpdateContext = React.createContext((gameOver: boolean) => {});
+type Props = {};
 
-export const useTurn = () => useContext(TurnContext);
-export const useTurnUpdate = () => useContext(TurnUpdateContext);
+const TurnContext = React.createContext(emptyPlayer);
+const UpdateTurnContext = React.createContext<
+  React.Dispatch<React.SetStateAction<PlayerServerInfo>>
+>(() => {});
 
-export const players = [
-  { displayName: "Andrzej Tester", figure: "king" },
-  { displayName: "Kamil Tester", figure: "viking" },
-];
-export const TurnContextProvider: React.FC = ({ children }) => {
-  const [turn, setTurn] = useState<iPlayer>({ ...players[0], index: 0 });
-  const newTurn = (gameOver: boolean) => {
-    let newPlayerIndex = turn.index;
+export const TurnContextProvider: React.FC<Props> = ({ children }) => {
+  const [turnPlayer, setTurnPlayer] = useState(emptyPlayer);
 
-    let player = {} as iPlayer;
-    if (gameOver) player = turn;
-    else {
-      if (turn.index === 0) newPlayerIndex = 1;
-      else newPlayerIndex = 0;
-      player= { ...players[newPlayerIndex], index: newPlayerIndex }
-    }
-    console.log("Player: ", player)
-    setTurn(player);
-  };
   return (
-    <TurnContext.Provider value={turn}>
-      <TurnUpdateContext.Provider value={newTurn}>
+    <TurnContext.Provider value={turnPlayer}>
+      <UpdateTurnContext.Provider value={setTurnPlayer}>
         {children}
-      </TurnUpdateContext.Provider>
+      </UpdateTurnContext.Provider>
     </TurnContext.Provider>
   );
+};
+
+export const useTurnContext = (): [
+  PlayerServerInfo,
+  React.Dispatch<React.SetStateAction<PlayerServerInfo>>
+] => {
+  const turn = useContext(TurnContext);
+  const setTurn = useContext(UpdateTurnContext);
+
+  return [turn, setTurn];
 };

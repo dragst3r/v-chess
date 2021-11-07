@@ -1,5 +1,5 @@
-import { iPlayer } from "../components/player/player.component";
 import { iField } from "./static.utility";
+import { PlayerServerInfo } from "./types";
 import { useVictory } from "./victory-contex";
   
 
@@ -7,8 +7,8 @@ export const validateMove = (
   currentField: iField,
   newField: iField,
   board: iField[],
-  setVictory: (winner: iPlayer) => void,
-  currentTurn: iPlayer
+  setVictory: (winner: PlayerServerInfo) => void,
+  currentTurn: PlayerServerInfo
 ):[boolean, boolean] => {
   //Check if newField is one of castles
   if ([0, 10, 110, 120].indexOf(newField.index) >= 0) {

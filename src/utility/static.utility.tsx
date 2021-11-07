@@ -1,3 +1,5 @@
+import { PlayerServerInfo } from "./types";
+
 interface Figure {
   [key: number]: { [key: number]: string };
 }
@@ -69,4 +71,11 @@ export const initialBoard = ():iField[] => {
     }
   }
   return board;
+};
+
+export const emptyPlayer: PlayerServerInfo = {
+  displayName: "",
+  side: "viking",
+  userId: "",
+  photoURL: "",
 };

@@ -16,13 +16,13 @@ const Figure: React.FC<Props> = ({ figure }) => {
   return (
     <img
       src={
-        figure.match(/^king/)
+        figure?.match(/^king/)
           ? KingFigure
-          : figure.match(/knight*/)
+          : figure?.match(/knight*/)
           ? KnightFigure
-          : figure.match(/viking*/)
+          : figure?.match(/viking*/)
           ? VikingFigure
-          : figure.match(/kastle*/)
+          : figure?.match(/kastle*/)
           ? CastleFigure
           : ""
       }
@@ -31,4 +31,4 @@ const Figure: React.FC<Props> = ({ figure }) => {
   );
 };
 
-export default Figure;
+export default React.memo(Figure);

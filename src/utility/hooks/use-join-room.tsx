@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSocket } from "../socket-context";
 import { PlayerServerInfo } from "../types";
 import { useUser } from "../user-context";
@@ -13,15 +13,17 @@ export const useJoinRoom = (): [
   const socket = useSocket();
   const [user] = useUser();
   const [users, setUsers] = useState<PlayerServerInfo[]>([]);
+  useMemo(() => {
+    console.log(roomId, user.loggedIn)
 
-  useEffect(() => {
-    if (socket.connected && roomId && user.loggedIn) {
+    if ( roomId && user.loggedIn) {
       socket.emit("join-room", roomId, user);
       socket.on("joined-room", (users:PlayerServerInfo[]) => {
+        console.log("update users",users)
         setUsers(users);
       });
     }
-  }, [socket, roomId, user]);
+  }, [socket, roomId, user,socket.connected]);
 
   return [setRoomId, users];
 };

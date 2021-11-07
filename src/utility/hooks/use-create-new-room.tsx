@@ -21,7 +21,7 @@ export const useCreateNewRoom = (): React.Dispatch<
   // }, [newRoom, socket]);
   useEffect(() => {
     console.log(socket);
-    if (socket.connected && newRoom) {
+    if (newRoom) {
       socket.emit("create-room", socket.id, user.userId);
       socket.on("room-created", (id: string, users: []) => {
         history.push("/room/" + id, id);

@@ -1,0 +1,11 @@
+.no-account-container{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    height: 150px;
+    background-color: beige;
+}
+.no-account-avatar{
+    width: 100px;
+    height: 100px;
+}

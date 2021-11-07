@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import useMoveFigure from "../../utility/hooks/use-move-figure";
 import { useSelectedField } from "../../utility/selected-field-context";
 import { iField } from "../../utility/static.utility";
-import { useTurn, useTurnUpdate } from "../../utility/turn-context";
+import { PlayerServerInfo } from "../../utility/types";
+import { useUser } from "../../utility/user-context";
 
 import Figure from "../figure/figure.component";
 
@@ -11,12 +12,13 @@ import "./field.styles.css";
 interface Props {
   position: number;
   item: iField;
+  turn: PlayerServerInfo
 }
 
-const Field: React.FC<Props> = ({ item, position }) => {
+const Field: React.FC<Props> = ({ item, turn }) => {
+  const [{ userId }] = useUser();
+
   const [selectedField, setSelectedField] = useSelectedField();
-  const turn = useTurn();
-  const updateTurn = useTurnUpdate();
   const moveFigure = useMoveFigure();
   const handleClick = () => {
 
@@ -45,11 +47,12 @@ const Field: React.FC<Props> = ({ item, position }) => {
       ? " selected"
       : "";
   const isMyTurn = (): boolean => {
-    return item.state.charAt(0) === turn.figure.charAt(0) || item.state === "";
+    if(turn) return userId==turn.userId &&  item.state.charAt(0) === turn.side.charAt(0) || item.state === "";
+    return false
   };
 
   const selectableCheck = (myTurn: boolean) => {
-    if (myTurn && item.state !== "") return " selectable";
+    if ( myTurn && item.state !== "") return " selectable";
     return "";
   };
   const [selectable, setSelectable] = useState("");
@@ -64,7 +67,7 @@ const Field: React.FC<Props> = ({ item, position }) => {
     let myTurn = isMyTurn();
     setMyTurn(myTurn);
     setSelectable(selectableCheck(myTurn));
-  }, [turn]);
+  }, [turn,userId]);
 
   return (
     <div

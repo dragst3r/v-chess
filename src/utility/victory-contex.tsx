@@ -1,19 +1,18 @@
 import React, { createContext, useContext, useState } from "react";
-import { iPlayer } from "../components/player/player.component";
+import { emptyPlayer } from "./static.utility";
+import { PlayerServerInfo } from "./types";
 
-const emptyWinner = {
-    displayName: "",
-    figure: "",
-    index: 0,
-  }
+
 const VictoryContext = createContext<boolean>(false);
-const WinnerContext = createContext<iPlayer>(emptyWinner);
-const UpdateVictoryContext = createContext<(player: iPlayer) => void>(() => {});
+const WinnerContext = createContext<PlayerServerInfo>(emptyPlayer);
+const UpdateVictoryContext = createContext<(player: PlayerServerInfo) => void>(
+  () => {}
+);
 
 export const VictoryContextProvider: React.FC = ({ children }) => {
   const [victory, setVictory] = useState(false);
-  const [winner, setWinner] = useState<iPlayer>(emptyWinner);
-  const setUpdatedVictory = (winner: iPlayer) => {
+  const [winner, setWinner] = useState<PlayerServerInfo>(emptyPlayer);
+  const setUpdatedVictory = (winner: PlayerServerInfo) => {
     setWinner(winner);
     setVictory(!victory);
   };
@@ -31,8 +30,8 @@ export const VictoryContextProvider: React.FC = ({ children }) => {
 
 export const useVictory = (): [
   boolean,
-  iPlayer,
-  (winner: iPlayer) => void
+  PlayerServerInfo,
+  (winner: PlayerServerInfo) => void
 ] => {
   const victory = useContext(VictoryContext);
   const winner = useContext(WinnerContext);
