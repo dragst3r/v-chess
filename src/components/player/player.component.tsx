@@ -28,4 +28,4 @@ const Player: React.FC<Props> = ({ player }) => {
   );
 };
 
-export default Player;
+export default React.memo(Player);

@@ -14,12 +14,10 @@ export const useJoinRoom = (): [
   const [user] = useUser();
   const [users, setUsers] = useState<PlayerServerInfo[]>([]);
   useMemo(() => {
-    console.log(roomId, user.loggedIn)
 
     if ( roomId && user.loggedIn) {
       socket.emit("join-room", roomId, user);
       socket.on("joined-room", (users:PlayerServerInfo[]) => {
-        console.log("update users",users)
         setUsers(users);
       });
     }

@@ -4,13 +4,13 @@ import { PlayerServerInfo } from "./types";
 
 type Props = {};
 
-const TurnContext = React.createContext(emptyPlayer);
+const TurnContext = React.createContext({} as PlayerServerInfo);
 const UpdateTurnContext = React.createContext<
   React.Dispatch<React.SetStateAction<PlayerServerInfo>>
 >(() => {});
 
 export const TurnContextProvider: React.FC<Props> = ({ children }) => {
-  const [turnPlayer, setTurnPlayer] = useState(emptyPlayer);
+  const [turnPlayer, setTurnPlayer] = useState({} as PlayerServerInfo);
 
   return (
     <TurnContext.Provider value={turnPlayer}>

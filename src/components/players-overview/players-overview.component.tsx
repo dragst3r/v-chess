@@ -10,11 +10,9 @@ interface Props {
 
 const PlayersOverview: React.FC<Props> = ({ players }) => {
   const [ turn] = useTurnContext()
-  useEffect(()=>{
-    console.log(players)
-  },[players])
+
   return (
-    <div>{turn.side}
+    <div onClick={()=>console.log(turn)}>{turn.side}
       {players.map(p=><Player player={p} />)}
     </div>
   );

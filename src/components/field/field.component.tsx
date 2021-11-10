@@ -12,16 +12,14 @@ import "./field.styles.css";
 interface Props {
   position: number;
   item: iField;
-  turn: PlayerServerInfo
+  turn: PlayerServerInfo;
+  userId: string | null;
 }
 
-const Field: React.FC<Props> = ({ item, turn }) => {
-  const [{ userId }] = useUser();
-
+const Field: React.FC<Props> = ({ item, turn, userId }) => {
   const [selectedField, setSelectedField] = useSelectedField();
   const moveFigure = useMoveFigure();
   const handleClick = () => {
-
     //Empty field, nothing selected
     if (selectedField.state === "" && item.state === "") return;
 
@@ -47,12 +45,17 @@ const Field: React.FC<Props> = ({ item, turn }) => {
       ? " selected"
       : "";
   const isMyTurn = (): boolean => {
-    if(turn) return userId==turn.userId &&  item.state.charAt(0) === turn.side.charAt(0) || item.state === "";
-    return false
+    if (turn)
+      return (
+        (userId == turn.userId &&
+          item.state.charAt(0) === turn.side.charAt(0)) ||
+        item.state === ""
+      );
+    return false;
   };
 
   const selectableCheck = (myTurn: boolean) => {
-    if ( myTurn && item.state !== "") return " selectable";
+    if (myTurn && item.state !== "") return " selectable";
     return "";
   };
   const [selectable, setSelectable] = useState("");
@@ -67,14 +70,14 @@ const Field: React.FC<Props> = ({ item, turn }) => {
     let myTurn = isMyTurn();
     setMyTurn(myTurn);
     setSelectable(selectableCheck(myTurn));
-  }, [turn,userId]);
+  }, [turn, userId]);
 
   return (
     <div
       onClick={myTurn ? handleClick : () => {}}
       className={`field${selected + selectable}`}
     >
-      {item.state !== "" && <Figure figure={item.state}/>}
+      {item.state !== "" && <Figure figure={item.state} />}
     </div>
   );
 };

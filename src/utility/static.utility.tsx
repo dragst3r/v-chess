@@ -75,7 +75,7 @@ export const initialBoard = ():iField[] => {
 
 export const emptyPlayer: PlayerServerInfo = {
   displayName: "",
-  side: "viking",
+  side: "king",
   userId: "",
   photoURL: "",
 };

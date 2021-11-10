@@ -16,13 +16,13 @@ const NewGameContainer = () => {
   }, [id, socket.connected]);
   return (
     <div>
-      {roomIsReady ? (
-        <TurnContextProvider>
+      <TurnContextProvider>
+        {roomIsReady ? (
           <GameOverview />
-        </TurnContextProvider>
-      ) : (
-        <NewRoom users={users} roomId={id} setRoomIsReady={setRoomIsReady} />
-      )}
+        ) : (
+          <NewRoom users={users} roomId={id} setRoomIsReady={setRoomIsReady} />
+        )}
+      </TurnContextProvider>
     </div>
   );
 };

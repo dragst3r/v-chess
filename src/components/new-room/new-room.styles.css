@@ -1,7 +1,12 @@
-.vs-logo{
+.vs-logo, .vs-logo-disabled{
     height: 80px;
     width: 80px;
+    cursor: pointer;
 }
+.vs-logo-disabled{
+    cursor: default;
+}
+
 .room-container{
     display: flex;
     flex-direction: column;
