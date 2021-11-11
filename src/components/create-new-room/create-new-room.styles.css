@@ -1,21 +1,30 @@
-.new-room-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    width: 350px;
-    margin: 10px;
-    padding: 10px;
-    background-color: burlywood;
-    cursor: pointer;
+.new-room-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 350px;
+  margin: 10px;
+  padding: 10px;
+  background-color: burlywood;
+  cursor: pointer;
+  box-shadow: 15px 15px 15px 0px rgba(0, 0, 0, 0.2);
+  transform: translatey(-8px);
+  transition: 400ms;
 }
 
-.new-room-text{
-    text-align: center;
-    align-self: center;
-    width: 100%;
-    font: 2em 'Play', serif;
+.new-room-container:hover {
+  box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.6);
+  transform: translatey(0px);
 }
-.new-room-logo{
-    height: 80px;
-    width: 80px;
+
+.new-room-text {
+  padding: 2px;
+  text-align: center;
+  align-self: center;
+  width: 100%;
+  font: 2em "Play", serif;
+}
+.new-room-logo {
+  height: 80px;
+  width: 80px;
 }

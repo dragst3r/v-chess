@@ -10,7 +10,7 @@ interface Props {}
 const HomePage: React.FC<Props> = () => {
   useAuth();
   return (
-    <div className="home-page-container">
+    <div className="home-page-container page">
       <div className="home-page-header">{<SignInAndOutButton />}</div>
       <SocketContextProvider>
         <div className="home-page-body">

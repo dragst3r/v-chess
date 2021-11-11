@@ -1,25 +1,41 @@
 import "./App.css";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import GamePage from "./pages/game.page";
-
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import HomePage from "./pages/home.page";
 import UserContextProvider from "./utility/user-context";
-import { useAuth } from "./utility/hooks/use-auth";
+import './transitions/transitions.scss'
+import { useHistory, useLocation } from "react-router-dom";
 
+type Props = {
+  props: any
+}
 function App() {
+    //Specify the duration of the animation (on enter and on exit)
+    const timeout = { enter: 800, exit: 400 };
   return (
-    <UserContextProvider>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route exact path="/room/:id">
-            <GamePage />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    </UserContextProvider>
+    <TransitionGroup component="div" className="App">
+      <CSSTransition
+        key={"/"}
+        timeout={timeout}
+        classNames="pageSlider"
+        mountOnEnter={true}
+        unmountOnExit={true}
+      >
+        <div>
+          <UserContextProvider>
+            <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={HomePage}>
+                </Route>
+                <Route exact path="/room/:id" component={GamePage}>
+                </Route>
+              </Switch>
+            </BrowserRouter>
+          </UserContextProvider>
+        </div>
+      </CSSTransition>
+    </TransitionGroup>
   );
 }
 

@@ -20,6 +20,7 @@ export const useLogOut= ()=>{
           .catch((error) => {
             console.error(error);
           });
+          window.localStorage.removeItem("v-chess-no-account")
       };
 
       return logOutUser

@@ -7,6 +7,7 @@ import "./new-room.styles.css";
 import { PlayerServerInfo } from "../../utility/types";
 import Lobby from "../lobby/lobby.component";
 import { useStartGame } from "../../utility/hooks/use-start-game";
+import FirstMove from "../first-move-selector/first-move-selector.component";
 
 interface Props {
   roomId: string;
@@ -21,7 +22,7 @@ const NewRoom: React.FC<Props> = ({ roomId, users, setRoomIsReady }) => {
   const [player1, setPlayer1] = useState<PlayerServerInfo>();
   const [player2, setPlayer2] = useState<PlayerServerInfo>();
   const [noSidePlayers, setNoSidePlayers] = useState<PlayerServerInfo[]>([]);
-
+  const [selectedSide, setSelectedSide] = useState("king");
   const [disabledRoom, setDisabledRoom] = useState(true);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const NewRoom: React.FC<Props> = ({ roomId, users, setRoomIsReady }) => {
         setNoSidePlayers(newNoSidePlayers);
       });
     }
-  }, [users]); 
+  }, [users]);
   useEffect(() => {
     setDisabledRoom(users.length == 2 && noSidePlayers.length == 0);
   }, [users, noSidePlayers]);
@@ -45,12 +46,24 @@ const NewRoom: React.FC<Props> = ({ roomId, users, setRoomIsReady }) => {
       <Lobby users={noSidePlayers} roomId={roomId} />
       <div className="room-spots-container">
         <RoomPlayerSpot background="king" player={player1} roomId={roomId} />
+        <FirstMove
+          setSelectedSide={setSelectedSide}
+          selectedSide={"king"}
+          side="king"
+          playerSide={player1?.side}
+        />
         <img
           onClick={() => {
-            if (disabledRoom) startGame("viking");
+            if (disabledRoom) startGame(selectedSide);
           }}
-          className={`vs-logo${disabledRoom?"":"-disabled"}`}
+          className={`vs-logo${disabledRoom ? "" : "-disabled"}`}
           src={disabledRoom ? NewRoomSVG : NewRoomDisabledSVG}
+        />
+        <FirstMove
+          setSelectedSide={setSelectedSide}
+          selectedSide={selectedSide}
+          side="viking"
+          playerSide={player2?.side}
         />
         <RoomPlayerSpot background="viking" player={player2} roomId={roomId} />
       </div>

@@ -4,6 +4,7 @@ import { useBoard } from "../board-context";
 import { useSocket } from "../socket-context";
 import { useTurnContext } from "../turn-context";
 import { PlayerServerInfo } from "../types";
+import { useVictory } from "../victory-contex";
 
 export const useUpdateBoard = () => {
   const socket = useSocket();
@@ -11,20 +12,21 @@ export const useUpdateBoard = () => {
   const [, setBoardState] = useBoard();
   const [board, setBoard] = useState([]);
   const [, setTurn] = useTurnContext();
-  const emitUpdateBoard = (board: any) => {
+  const [victory, , setWinner] = useVictory();
+  const emitUpdateBoard = (board: any, victory: boolean) => {
     console.log(id);
     if (id) {
-      socket.emit("update-board", board, id);
+      socket.emit("update-board", board, id, victory);
       setBoard(board);
     }
   };
   useEffect(() => {
-    console.log("1");
-    socket.on("board-updated", (board, nextTurn: PlayerServerInfo) => {
+    socket.on("board-updated", (board, nextTurn: PlayerServerInfo, victory) => {
       console.log("current turn", nextTurn.side);
       setBoardState(board);
       setTurn(nextTurn);
+      if (victory) setWinner(nextTurn);
     });
-  }, [socket, board]);
+  }, [socket, board, victory]);
   return emitUpdateBoard;
 };

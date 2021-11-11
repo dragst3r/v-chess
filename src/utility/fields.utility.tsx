@@ -7,13 +7,11 @@ export const validateMove = (
   currentField: iField,
   newField: iField,
   board: iField[],
-  setVictory: (winner: PlayerServerInfo) => void,
-  currentTurn: PlayerServerInfo
+
 ):[boolean, boolean] => {
   //Check if newField is one of castles
   if ([0, 10, 110, 120].indexOf(newField.index) >= 0) {
     if (currentField.state === "king") {
-      setVictory(currentTurn)
       return [true,true];
     }else return [false,false]
   }

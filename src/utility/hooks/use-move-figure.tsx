@@ -16,9 +16,7 @@ const useMoveFigure = () => {
     const [isMoveValid, isGameOver] = validateMove(
       selectedField,
       item,
-      boardState,
-      setVictory,
-      turn
+      boardState
     );
     let gameOver = isGameOver;
     if (isMoveValid) {
@@ -38,12 +36,9 @@ const useMoveFigure = () => {
         }
         return i;
       });
-      setBoardState(boardAfterKills);
-      emitUpdateBoard(boardAfterKills);
+      emitUpdateBoard(boardAfterKills,gameOver);
       setSelectedField({ row: -1, column: -1, state: "", index: -1 });
-      if (gameOver) {
-        setVictory(turn); // Add hook for finnishing game
-      }
+    
     }
   };
   return moveFigure;
