@@ -39,7 +39,7 @@ const NewRoom: React.FC<Props> = ({ roomId, users, setRoomIsReady }) => {
     }
   }, [users]);
   useEffect(() => {
-    setDisabledRoom(users.length == 2 && noSidePlayers.length == 0);
+    setDisabledRoom(!(users.length == 2 && noSidePlayers.length == 0));
   }, [users, noSidePlayers]);
   return (
     <div className="room-container">
@@ -54,10 +54,10 @@ const NewRoom: React.FC<Props> = ({ roomId, users, setRoomIsReady }) => {
         />
         <img
           onClick={() => {
-            if (disabledRoom) startGame(selectedSide);
+            if (!disabledRoom) startGame(selectedSide);
           }}
           className={`vs-logo${disabledRoom ? "" : "-disabled"}`}
-          src={disabledRoom ? NewRoomSVG : NewRoomDisabledSVG}
+          src={disabledRoom ? NewRoomDisabledSVG : NewRoomSVG}
         />
         <FirstMove
           setSelectedSide={setSelectedSide}

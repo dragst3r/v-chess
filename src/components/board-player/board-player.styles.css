@@ -1,0 +1,29 @@
+.board-player-container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  border: 10px solid transparent;
+}
+.board-player-custody-figure-container {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.bars-icon {
+  width: 50px;
+
+  position: absolute;
+}
+.board-player-custody {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+  flex-wrap:wrap-reverse;
+  max-width: 600px;
+}

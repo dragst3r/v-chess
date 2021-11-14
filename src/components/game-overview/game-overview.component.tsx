@@ -18,7 +18,6 @@ const GameOverview: React.FC<Props> = ({users}) => {
         <SelectedFieldContextProvider>
           <VictoryContextProvider>{users && <Board />}</VictoryContextProvider>
         </SelectedFieldContextProvider>
-      <PlayersOverview players={users} />
     </div>
   );
 };

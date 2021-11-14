@@ -2,17 +2,20 @@
   width: 600px;
   height: 600px;
   position: relative;
+  padding: 20px
 }
 
 .board {
   width: 100%;
   height: 100%;
   display: grid;
-  background-color: #000;
+  background-color: rgb(161, 160, 160);
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(11, 1fr);
   gap: 1px;
   z-index: -1;
+  border: 10px solid rgb(99, 73, 73);
+
 }
 .victory {
   width: 100%;

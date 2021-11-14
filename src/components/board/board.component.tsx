@@ -7,6 +7,7 @@ import Victory from "../victory/victory.component";
 import { useVictory } from "../../utility/victory-contex";
 import { useTurnContext } from "../../utility/turn-context";
 import { useUser } from "../../utility/user-context";
+import BoardPlayer from "../board-player/board-player.component";
 
 interface Props {}
 
@@ -18,12 +19,14 @@ const Board: React.FC<Props> = () => {
 
   return (
     <div className="board-container">
+      <BoardPlayer side="king" />
       {gameOver && <Victory />}
       <div className="board">
         {board.map((m, i) => (
           <Field userId={userId} turn={turn} key={`R${m.row}C${m.column}`} position={i} item={m} />
         ))}
       </div>
+      <BoardPlayer side="viking" />
     </div>
   );
 };

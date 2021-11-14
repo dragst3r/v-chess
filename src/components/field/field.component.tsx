@@ -77,7 +77,7 @@ const Field: React.FC<Props> = ({ item, turn, userId }) => {
       onClick={myTurn ? handleClick : () => {}}
       className={`field${selected + selectable}`}
     >
-      {item.state !== "" && <Figure figure={item.state} />}
+      {item.state !== "" && <Figure size="medium" figure={item.state} />}
     </div>
   );
 };

@@ -20,7 +20,7 @@ const Player: React.FC<Props> = ({ player }) => {
 
   return (
     <div>
-      <Figure figure={player?.side} />
+      <Figure size="large" figure={player?.side} />
       <a className={`player-name${myTurn ? " my-turn" : ""}`}>
         {player?.displayName}
       </a>

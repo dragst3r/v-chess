@@ -1,5 +1,6 @@
 import "./first-move-selector.styles.css";
 import FirstActiveSVG from "../../1st-active.svg";
+import { useSpring, animated } from "react-spring";
 
 type Props = {
   side: string;
@@ -14,15 +15,19 @@ const FirstMove: React.FC<Props> = ({
   selectedSide,
   setSelectedSide,
 }) => {
+
+  const styles = useSpring({
+    from: { width: 0, opacity: 0 },
+    delay: 300,
+    to: {width: 50, opacity: 1 },
+  });
   return (
-    <div
-      className="first-move-container"
-    >
-      <img
+    <animated.div style={styles} className="first-move-container">
+      <animated.img style={styles}
         className="first-move-icon"
         src={side === selectedSide ? FirstActiveSVG : undefined}
       />
-    </div>
+    </animated.div>
   );
 };
 

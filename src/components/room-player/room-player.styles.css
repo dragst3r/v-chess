@@ -1,7 +1,6 @@
 .player-spot{
-    width: 200px;
+    width: 100px;
     height: 100px;
-    margin: 10px;
     background-position: center;
     text-align: center;
 }
@@ -13,12 +12,12 @@
 .king{
     background-image: url(/src/king-figure.svg);
     background-repeat: no-repeat;
-    background-size: 30%;
+    background-size: 50%;
 }
 .viking{
     background-image: url(/src/viking-figure.svg);
     background-repeat: no-repeat;
-    background-size: 30%;
+    background-size: 50%;
 }
 .taken{
     color: red
