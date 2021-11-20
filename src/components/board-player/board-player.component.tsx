@@ -7,10 +7,12 @@ import BarsIcon from "../../bars.svg";
 
 type Props = {
   side: string;
+  turn: string;
 };
-const BoardPlayer: React.FC<Props> = ({ side }) => {
+const BoardPlayer: React.FC<Props> = ({ side, turn }) => {
   const [board] = useBoard();
   const [custody, setCustody] = useState<string[]>([]);
+  const [isMyTurn, setIsMyTurn] = useState(false);
   let enemySide =
     side === "king" ? "viking" : side === "viking" ? "knight" : "";
   useEffect(() => {
@@ -30,11 +32,12 @@ const BoardPlayer: React.FC<Props> = ({ side }) => {
       enemySide === "knight" ? 12 : enemySide === "viking" ? 24 : count;
     let arr = Array(base - count).fill(enemySide);
     setCustody(arr);
-    console.log(arr);
   }, [board]);
-
+  useEffect(() => {
+    setIsMyTurn(turn === side);
+  }, [turn]);
   return (
-    <div className="board-player-container">
+    <div className={`board-player-container board-player-container-${side}`}>
       <div className="board-player-displayname"></div>
       <div className="board-player-figure">
         <Figure size="large" figure={side} />

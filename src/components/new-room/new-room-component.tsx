@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from "react";
 import RoomPlayerSpot from "../room-player/room-player.component";
-import NewRoomSVG from "../../new-room.svg";
-import NewRoomDisabledSVG from "../../new-room-disabled.svg";
+
 
 import "./new-room.styles.css";
 import { PlayerServerInfo } from "../../utility/types";
 import Lobby from "../lobby/lobby.component";
 import { useStartGame } from "../../utility/hooks/use-start-game";
 import FirstMove from "../first-move-selector/first-move-selector.component";
+import { StartGameButton } from "../start-game-button/start-game-button.component";
 
 interface Props {
   roomId: string;
   users: PlayerServerInfo[];
-  setRoomIsReady: React.Dispatch<React.SetStateAction<boolean>>;
+  roomIsReady:boolean;
+  setRoomIsReady: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const NewRoom: React.FC<Props> = ({ roomId, users, setRoomIsReady }) => {
+const NewRoom: React.FC<Props> = ({ roomId, users,setRoomIsReady }) => {
   //const users = useGetRoomUsers({roomId})
   //useTest()
-  const startGame = useStartGame(roomId, setRoomIsReady);
   const [player1, setPlayer1] = useState<PlayerServerInfo>();
   const [player2, setPlayer2] = useState<PlayerServerInfo>();
   const [noSidePlayers, setNoSidePlayers] = useState<PlayerServerInfo[]>([]);
   const [selectedSide, setSelectedSide] = useState("king");
   const [disabledRoom, setDisabledRoom] = useState(true);
+  const startGame = useStartGame(roomId,setRoomIsReady);
 
   useEffect(() => {
     const newNoSidePlayers: PlayerServerInfo[] = [];
@@ -52,13 +53,7 @@ const NewRoom: React.FC<Props> = ({ roomId, users, setRoomIsReady }) => {
           side="king"
           playerSide={player1?.side}
         />
-        <img
-          onClick={() => {
-            if (!disabledRoom) startGame(selectedSide);
-          }}
-          className={`vs-logo${disabledRoom ? "" : "-disabled"}`}
-          src={disabledRoom ? NewRoomDisabledSVG : NewRoomSVG}
-        />
+        <StartGameButton startGame={startGame} roomId={roomId} disabledRoom={disabledRoom} selectedSide={selectedSide} />
         <FirstMove
           setSelectedSide={setSelectedSide}
           selectedSide={selectedSide}

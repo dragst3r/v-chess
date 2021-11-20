@@ -18,13 +18,14 @@ const RoomPlayerSpot: React.FC<Props> = ({ player, background, roomId }) => {
   }, [player]);
 
   return (
-    <div
-      onClick={() => {
-        if (!taken) handleSetSide(background, roomId);
-      }}
-      className={`player-spot ${background}${taken ? " taken" : ""}`}
-    >
-      {player?.displayName}
+    <div className="player-spot-container">
+      <div
+        onClick={() => {
+          if (!taken) handleSetSide(background, roomId);
+        }}
+        className={`player-spot ${background}${taken ? " taken" : ""}`}
+      ></div>
+      <div className="player-spot-display-name">{player?.displayName}</div>
     </div>
   );
 };

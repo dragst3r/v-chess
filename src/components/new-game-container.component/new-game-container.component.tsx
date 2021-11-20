@@ -7,9 +7,12 @@ import GameOverview from "../game-overview/game-overview.component";
 
 const NewGameContainer = () => {
   const [roomIsReady, setRoomIsReady] = useState(false);
+
+
   const { id } = useParams<{ id: string }>();
   const [joinRoom, users] = useJoinRoom(setRoomIsReady);
   const socket = useSocket();
+  useEffect(()=>{},[roomIsReady])
   useEffect(() => {
     if (id) joinRoom(id);
   }, [id, socket.connected]);
@@ -21,6 +24,7 @@ const NewGameContainer = () => {
             <NewRoom
               users={users}
               roomId={id}
+              roomIsReady={roomIsReady}
               setRoomIsReady={setRoomIsReady}
             />
           )}

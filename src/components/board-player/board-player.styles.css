@@ -1,10 +1,27 @@
 .board-player-container {
   display: flex;
   flex-direction: column;
-  justify-items: center;
-  align-items: center;
-  width: 100%;
   border: 10px solid transparent;
+}
+
+.board-player-container-viking {
+  align-items: flex-start;
+}
+.board-player-container-king {
+  align-items: flex-end;
+}
+@media only screen and (max-width: 800px) {
+  .board-player-container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .board-player-container-viking {
+    align-items: center;
+  }
+  .board-player-container-king {
+    align-items:center;
+  }
 }
 .board-player-custody-figure-container {
   width: 50px;
@@ -24,6 +41,6 @@
   flex-direction: row;
   justify-items: center;
   align-items: center;
-  flex-wrap:wrap-reverse;
+  flex-wrap: wrap-reverse;
   max-width: 600px;
 }

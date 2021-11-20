@@ -18,7 +18,7 @@ const FirstMove: React.FC<Props> = ({
 
   const styles = useSpring({
     from: { width: 0, opacity: 0 },
-    delay: 300,
+    delay: 500,
     to: {width: 50, opacity: 1 },
   });
   return (
