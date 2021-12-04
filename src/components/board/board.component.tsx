@@ -17,7 +17,6 @@ const Board: React.FC<Props> = () => {
   const [gameOver] = useVictory();
   const [turn, setTurn] = useTurnContext();
   const [{ userId }] = useUser();
-  const [isMobile] = useScreenSize()
   
 
   return (

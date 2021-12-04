@@ -1,32 +1,42 @@
 import "./first-move-selector.styles.css";
-import FirstActiveSVG from "../../1st-active.svg";
 import { useSpring, animated } from "react-spring";
+import { useSelectSide } from "../../utility/hooks/use-select-side";
+import { PlayerServerInfo } from "../../utility/types";
+import UserInLobby from "../user-in-lobby/user-in-lobby.component";
+import { useEffect, useState } from "react";
 
 type Props = {
   side: string;
-  playerSide: string | undefined;
+  player: PlayerServerInfo | undefined;
   selectedSide: string;
-  setSelectedSide: (side: string) => void;
+  roomId: string;
 };
 
-const FirstMove: React.FC<Props> = ({
-  side,
-  playerSide,
-  selectedSide,
-  setSelectedSide,
-}) => {
+const FirstMove: React.FC<Props> = ({ side, roomId, player }) => {
+  const handleSetSide = useSelectSide();
+  const [taken, setTaken] = useState(false);
 
-  const styles = useSpring({
+  useEffect(() => {
+    if (player) setTaken(true);
+    else setTaken(false);
+  }, [player]);
+  const stylesDiv = useSpring({
     from: { width: 0, opacity: 0 },
     delay: 500,
-    to: {width: 50, opacity: 1 },
+    to: { width: 120, opacity: 1 },
   });
+
   return (
-    <animated.div style={styles} className="first-move-container">
-      <animated.img style={styles}
-        className="first-move-icon"
-        src={side === selectedSide ? FirstActiveSVG : undefined}
-      />
+    <animated.div
+      onClick={() => handleSetSide(side, roomId)}
+      style={stylesDiv}
+      className={`first-move-container ${taken ? " first-move-container-taken" : ""}`}
+    >
+      {taken ? (
+        <div className="first-move-user-icon">
+          <UserInLobby key={player?.userId} photoUrl={player?.photoURL} />
+        </div>
+      ) : null}
     </animated.div>
   );
 };

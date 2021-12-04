@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import CreateNewRoom from "../components/create-new-room/create-new-room.component";
+import { Guide } from "../components/guide/guide.component";
 import RoomsToJoin from "../components/rooms-to-join/rooms-to-join.component";
 import SignInAndOutButton from "../components/sign-in-and-out-button/sign-in-and-out-button.component";
 import { useAuth } from "../utility/hooks/use-auth";
@@ -16,6 +17,7 @@ const HomePage: React.FC<Props> = () => {
         <div className="home-page-body">
           <CreateNewRoom />
           <RoomsToJoin />
+          <Guide />
         </div>
       </SocketContextProvider>
     </div>

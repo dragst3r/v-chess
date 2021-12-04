@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "src/components/guide-item/guide-item.component.tsx"  ]
 }

@@ -1,11 +1,41 @@
-.no-account-container{
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    height: 150px;
-    background-color: beige;
+.no-account-container {
+  width: 100%;
+  justify-content: center;
+  display: flex;
 }
-.no-account-avatar{
-    width: 100px;
-    height: 100px;
+
+.no-account {
+  padding: 10px;
+  background-color: beige;
+  margin-top: 30px;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+}
+.no-account-avatar {
+  width: 80px;
+  height: 100px;
+  cursor: pointer;
+}
+.no-account-input {
+  height: 35px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid grey;
+  background-color: transparent;
+  padding-left: 10px;
+  margin-right: 10px;
+  font: 1em "Play", serif;
+}
+.no-account-submit {
+  height: 40px;
+  width: 100px;
+  font: 1em "Play", serif;
+  background-color: burlywood;
+  border: 1px solid transparent;
+  border-radius: 40px;
+color: brown;
 }

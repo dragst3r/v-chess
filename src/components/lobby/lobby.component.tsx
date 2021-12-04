@@ -6,18 +6,18 @@ import "./lobby.styles.css";
 
 type Props = {
   users: PlayerServerInfo[];
-  roomId: string
+  roomId: string;
 };
 
 const Lobby: React.FC<Props> = ({ users, roomId }) => {
   const handleSetSide = useSelectSide();
 
   return (
-    <div onClick={()=>handleSetSide("",roomId)} className="lobby-container">
-      {users.map((u,index) => (
-        <UserInLobby key={index} displayName={u.displayName} photoUrl={u.photoURL} />
+    <div onClick={() => handleSetSide("", roomId)} className="lobby-container">
+      {users.map((u, index) => (
+        <UserInLobby key={index} photoUrl={u.photoURL} />
       ))}
     </div>
   );
 };
-export default React.memo(Lobby)
+export default React.memo(Lobby);

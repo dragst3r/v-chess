@@ -1,0 +1,10 @@
+.guide-contrainer {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.guide-header {
+    text-align: center;
+
+}

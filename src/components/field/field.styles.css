@@ -7,6 +7,9 @@
   justify-content: center;
   align-items: center;
 }
+.king-only-field{
+  background-color: rgb(141, 108, 108)
+}
 .selectable {
   background-color: rgb(238, 186, 119);
   cursor: pointer;

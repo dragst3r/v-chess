@@ -22,7 +22,6 @@ export const useUpdateBoard = () => {
   };
   useEffect(() => {
     socket.on("board-updated", (board, nextTurn: PlayerServerInfo, victory) => {
-      console.log("current turn", nextTurn.side);
       setBoardState(board);
       setTurn(nextTurn);
       if (victory) setWinner(nextTurn);

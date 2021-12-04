@@ -1,7 +1,21 @@
 .first-move-container{
-    width: 50px;
-    height: 50px;
+    cursor: pointer;
+    height: 30px;
+    background-color: rgb(235, 235, 235);
+    width: 60px;
+    border-radius: 20px;
+    border: 2px dotted grey;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    transition: ease-in;
 }
-.first-move-icon{
-    width: 50px;
+.first-move-container-taken{
+    border: 2px solid rgb(206, 206, 206);
+    background-color: rgb(255, 255, 255);
+}
+
+.first-move-user-icon{
+    position: relative;
+
 }

@@ -2,6 +2,7 @@
     height: 80px;
     width: 80px;
     cursor: pointer;
+    position: absolute;
 }
 .vs-logo-disabled{
     cursor: default;
@@ -16,4 +17,5 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 }

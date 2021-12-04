@@ -10,13 +10,18 @@ import Figure from "../figure/figure.component";
 import "./field.styles.css";
 
 interface Props {
+  key: string;
   position: number;
   item: iField;
   turn: PlayerServerInfo;
   userId: string | null;
 }
 
-const Field: React.FC<Props> = ({ item, turn, userId }) => {
+const Field: React.FC<Props> = ({ item, turn, userId, key }) => {
+  let isKingOnlyField = false;
+  if ([0, 10,60,110,120].indexOf(item.index) > -1) {
+    isKingOnlyField = true;
+  }
   const [selectedField, setSelectedField] = useSelectedField();
   const moveFigure = useMoveFigure();
   const handleClick = () => {
@@ -74,8 +79,11 @@ const Field: React.FC<Props> = ({ item, turn, userId }) => {
 
   return (
     <div
+      key={key}
       onClick={myTurn ? handleClick : () => {}}
-      className={`field${selected + selectable}`}
+      className={`field${selected + selectable} ${
+        isKingOnlyField ? "king-only-field" : ""
+      }`}
     >
       {item.state !== "" && <Figure size="medium" figure={item.state} />}
     </div>

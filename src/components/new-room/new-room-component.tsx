@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import RoomPlayerSpot from "../room-player/room-player.component";
 
-
 import "./new-room.styles.css";
 import { PlayerServerInfo } from "../../utility/types";
 import Lobby from "../lobby/lobby.component";
@@ -12,11 +11,11 @@ import { StartGameButton } from "../start-game-button/start-game-button.componen
 interface Props {
   roomId: string;
   users: PlayerServerInfo[];
-  roomIsReady:boolean;
-  setRoomIsReady: React.Dispatch<React.SetStateAction<boolean>>
+  roomIsReady: boolean;
+  setRoomIsReady: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NewRoom: React.FC<Props> = ({ roomId, users,setRoomIsReady }) => {
+const NewRoom: React.FC<Props> = ({ roomId, users, setRoomIsReady }) => {
   //const users = useGetRoomUsers({roomId})
   //useTest()
   const [player1, setPlayer1] = useState<PlayerServerInfo>();
@@ -24,7 +23,7 @@ const NewRoom: React.FC<Props> = ({ roomId, users,setRoomIsReady }) => {
   const [noSidePlayers, setNoSidePlayers] = useState<PlayerServerInfo[]>([]);
   const [selectedSide, setSelectedSide] = useState("king");
   const [disabledRoom, setDisabledRoom] = useState(true);
-  const startGame = useStartGame(roomId,setRoomIsReady);
+  const startGame = useStartGame(roomId, setRoomIsReady);
 
   useEffect(() => {
     const newNoSidePlayers: PlayerServerInfo[] = [];
@@ -48,19 +47,24 @@ const NewRoom: React.FC<Props> = ({ roomId, users,setRoomIsReady }) => {
       <div className="room-spots-container">
         <RoomPlayerSpot background="king" player={player1} roomId={roomId} />
         <FirstMove
-          setSelectedSide={setSelectedSide}
+          roomId={roomId}
           selectedSide={"king"}
           side="king"
-          playerSide={player1?.side}
+          player={player1}
         />
-        <StartGameButton startGame={startGame} roomId={roomId} disabledRoom={disabledRoom} selectedSide={selectedSide} />
         <FirstMove
-          setSelectedSide={setSelectedSide}
+          roomId={roomId}
           selectedSide={selectedSide}
           side="viking"
-          playerSide={player2?.side}
+          player={player2}
         />
         <RoomPlayerSpot background="viking" player={player2} roomId={roomId} />
+        <StartGameButton
+          startGame={startGame}
+          roomId={roomId}
+          disabledRoom={disabledRoom}
+          selectedSide={selectedSide}
+        />
       </div>
     </div>
   );
