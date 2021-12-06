@@ -9,7 +9,7 @@ const SignInAndOutButton = () => {
   const logOut = useLogOut();
   const [user, setUser] = useUser();
   const SignIn = (
-    <button onClick={signInWithGoogle}>Sign in with Google</button>
+    <button className="user-sign-in-with-google" onClick={signInWithGoogle}>Sign in with Google</button>
   );
   const SignOut = (
     <div onClick={logOut} className="user-container">

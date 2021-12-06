@@ -7,15 +7,39 @@ export const Guide: React.FC<any> = () => {
     {
       index: 0,
       header: "How to move?",
-      text: "You can move vertically and horizontally only, but not over other figures. You cannot step on brown fields. Well, you can but only with king...",
-      url: "../../guide-move.jpg",
+      items: [
+        {
+          text: "You can move only vertically and horizontally, but not over other figures. You cannot step on brown fields. Well, you can but only with king...",
+          url: "../../guide-move.jpg",
+        },
+      ],
     },
-    { index: 1, header: "How to kill?", text: "", url: "../../guide-kill.jpg" },
+    {
+      index: 1,
+      header: "How to kill?",
+      items: [
+        {
+          text: "Catch enemy of guard by attacking from behind. You need 2 soldiers to attack simultaneously from left and right or top and bottom. Watch your back...",
+          url: "../../guide-kill.jpg",
+        },
+        {
+          text: "If enemy is near edge or brown square you can use that too.",
+          url: "../../guide-kill2.jpg",
+        },
+      ],
+    },
     {
       index: 2,
       header: "How to win?",
-      text: "",
-      url: "../../guide-win-as-king.jpg",
+      items: [
+        {
+          text: "As king - Escape to one of the corners. How noble...",
+          url: "../../guide-win-as-king.jpg",
+        },{
+          text: "As viking - Surround enemy king from all 4 sides, you can use egde and corners too. Then you know what to do...",
+          url: "../../guide-win-as-viking.jpg",
+        }
+      ],
     },
   ];
   return (

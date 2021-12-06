@@ -6,7 +6,6 @@ import "./no-account.styles.css";
 import { Bubble } from "../bubble/bubble.component";
 type Props = {};
 const NoAcount: React.FC<Props> = () => {
-
   const [nickName, setNickname] = useState("");
   const [, setLocalStorage] = useLocalStorage("v-chess-no-account", "");
   const [photoUrl, setPhotoUrl] = useState(
@@ -32,10 +31,13 @@ const NoAcount: React.FC<Props> = () => {
   };
   return (
     <div className="no-account-container">
-      <Bubble
-        visible={showBubble}
-        text={showBubble ? "Thanks..." : "Click me!"}
-      />
+      <div className="no-account-bubble">
+        <Bubble
+          visible={showBubble}
+          text={showBubble ? "Thanks..." : "Click me!"}
+        />
+      </div>
+
       <div className="no-account">
         <img
           onClick={() => {
@@ -56,7 +58,12 @@ const NoAcount: React.FC<Props> = () => {
             placeholder="Your nickname..."
             type="text"
           />
-          <input disabled={nickName==""} className="no-account-submit" type="submit" value="Confirm" />
+          <input
+            disabled={nickName == ""}
+            className="no-account-submit"
+            type="submit"
+            value="Confirm"
+          />
         </form>
       </div>
     </div>

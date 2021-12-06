@@ -16,7 +16,7 @@ const HomePage: React.FC<Props> = () => {
       <SocketContextProvider>
         <div className="home-page-body">
           <CreateNewRoom />
-          <RoomsToJoin />
+          
           <Guide />
         </div>
       </SocketContextProvider>
@@ -25,3 +25,4 @@ const HomePage: React.FC<Props> = () => {
 };
 
 export default HomePage;
+//<RoomsToJoin />

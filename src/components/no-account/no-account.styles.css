@@ -3,12 +3,17 @@
   justify-content: center;
   display: flex;
 }
-
+.no-account-form {
+  display: flex;
+  flex-direction: row;
+}
+.no-account-bubble{
+  height: 25px;
+}
 .no-account {
   padding: 10px;
   background-color: beige;
   margin-top: 30px;
-  border-radius: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -16,7 +21,7 @@
   width: 400px;
 }
 .no-account-avatar {
-  width: 80px;
+  width: 100px;
   height: 100px;
   cursor: pointer;
 }
@@ -24,6 +29,7 @@
   height: 35px;
   border: none;
   outline: none;
+  width: 100%;
   border-bottom: 1px solid grey;
   background-color: transparent;
   padding-left: 10px;
@@ -32,10 +38,38 @@
 }
 .no-account-submit {
   height: 40px;
-  width: 100px;
+  width: 130px;
   font: 1em "Play", serif;
   background-color: burlywood;
   border: 1px solid transparent;
   border-radius: 40px;
-color: brown;
+  color: brown;
+}
+@media only screen and (max-width: 600px) {
+  .no-account-container {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin: 200px 10px 0 10px;
+    width: auto;
+  }
+  .no-account-avatar {
+    position: absolute;
+    top: 110px;
+    background-color: beige;
+    border-radius: 50%;
+    border: 2px solid burlywood;
+  }
+  .no-account-bubble{
+    position: absolute;
+    top: 60px;
+    right: 65%;
+    width: 100%;
+    z-index: 1;
+  }
+}
+@media only screen and (max-width: 420px) {
+  .no-account {
+    width: auto;
+  }
 }

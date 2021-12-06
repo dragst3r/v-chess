@@ -3,19 +3,17 @@ import React, { useEffect, useState } from "react";
 import "./guide-item.styles.css";
 type Props = {
   header: string;
-  text: string;
+  items: { text: string; url: string }[];
   index: number;
   visibleIndex: number;
   setVisibleIndex: React.Dispatch<React.SetStateAction<number>>;
-  url: string;
 };
 export const GuideItem: React.FC<Props> = ({
   header,
-  text,
+  items,
   index,
   visibleIndex,
   setVisibleIndex,
-  url,
 }) => {
   const style = useSpring({
     from: { opacity: 0 },
@@ -23,7 +21,6 @@ export const GuideItem: React.FC<Props> = ({
     reverse: visibleIndex !== index,
     to: { opacity: 1 },
   });
-
   return (
     <div
       className={`guide-item-container guide-item-container-${
@@ -36,8 +33,12 @@ export const GuideItem: React.FC<Props> = ({
       </div>
       {visibleIndex === index ? (
         <animated.div style={style}>
-          <h3>{text}</h3>
-          <img className="guide-item-image" src={url} />
+          {items.map(({ text, url }, index) => (
+            <div key={index}>
+              <h3>{text}</h3>
+              <img className="guide-item-image" src={url} />
+            </div>
+          ))}
         </animated.div>
       ) : null}
     </div>
