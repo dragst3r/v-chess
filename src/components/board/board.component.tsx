@@ -23,7 +23,7 @@ const Board: React.FC<Props> = () => {
     <div className="board-and-players-container">
         <BoardPlayer turn={turn.side} side="king" />
       <div className="board-container">
-        {/*gameOver*/ false && <Victory />}
+        {gameOver && <Victory />}
         <div className="board">
           {board.map((m, i) => (
             <Field
