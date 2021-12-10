@@ -9,18 +9,17 @@
 .board-container {
   width: 600px;
   position: relative;
-  padding: 20px;
   display: flex;
   flex-direction: row;
 }
 .board {
+  padding: 5px;
   height: 100%;
   display: grid;
-  background-color: rgb(161, 160, 160);
+  background-color: rgb(141, 108, 108);
   grid-template-columns: repeat(11, 1fr);
   grid-template-rows: repeat(11, 1fr);
   gap: 1px;
-  border: 10px solid rgb(141, 108, 108);
 }
 @media only screen and (max-width: 800px) {
   .board-and-players-container {

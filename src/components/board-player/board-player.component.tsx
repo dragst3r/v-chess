@@ -11,7 +11,7 @@ type Props = {
 };
 const BoardPlayer: React.FC<Props> = ({ side, turn }) => {
   const [board] = useBoard();
-  const [custody, setCustody] = useState<string[]>([]);
+  const [custodyCount, setCustodyCount] = useState(0);
   const [isMyTurn, setIsMyTurn] = useState(false);
   let enemySide =
     side === "king" ? "viking" : side === "viking" ? "knight" : "";
@@ -30,8 +30,8 @@ const BoardPlayer: React.FC<Props> = ({ side, turn }) => {
     });
     let base =
       enemySide === "knight" ? 12 : enemySide === "viking" ? 24 : count;
-    let arr = Array(base - count).fill(enemySide);
-    setCustody(arr);
+
+    setCustodyCount(base - count);
   }, [board]);
   useEffect(() => {
     setIsMyTurn(turn === side);
@@ -42,13 +42,17 @@ const BoardPlayer: React.FC<Props> = ({ side, turn }) => {
       <div className="board-player-figure">
         <Figure size="large" figure={side} />
       </div>
+
       <div className="board-player-custody">
-        {custody.map((i) => (
-          <div className="board-player-custody-figure-container">
-            <Figure size="small" figure={i} />
-            <img className="bars-icon" src={BarsIcon}></img>
-          </div>
-        ))}
+        {custodyCount > 0 ? (
+          <>
+            {custodyCount + "x"}
+            <div className="board-player-custody-figure-container">
+              <Figure size="small" figure={enemySide} />
+              <img className="bars-icon" src={BarsIcon}></img>
+            </div>
+          </>
+        ) : null}
       </div>
     </div>
   );

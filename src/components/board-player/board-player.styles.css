@@ -1,7 +1,7 @@
 .board-player-container {
   display: flex;
   flex-direction: column;
-  border: 10px solid transparent;
+  padding: 10px
 }
 
 .board-player-container-viking {
@@ -33,7 +33,6 @@
 }
 .bars-icon {
   width: 50px;
-
   position: absolute;
 }
 .board-player-custody {
@@ -43,4 +42,12 @@
   align-items: center;
   flex-wrap: wrap-reverse;
   max-width: 600px;
+  width:100%
+}
+.board-player-displayname{
+  width: 100%
+}
+.board-player-figure{
+  display: flex;
+  justify-content: center
 }

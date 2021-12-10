@@ -4,17 +4,17 @@ import "./bubble.styles.css";
 
 type Props = { visible: boolean; text: string };
 export const Bubble: React.FC<Props> = ({ visible, text }) => {
-  const [v, setV] = useState(true);
+  const [reverse, setReverse] = useState(true);
   useEffect(() => {
-    setV(true);
+    setReverse(true);
   }, [text]);
   setTimeout(() => {
-    setV(false);
+    setReverse(false);
   }, 2000);
   const styles = useSpring({
     from: { opacity: 0, top: 70, width: 100 },
     delay: 300,
-    reverse: !v,
+    reverse: !reverse,
     to: { opacity: 1, top: 50 },
   });
   return (
