@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Route } from "react-router-dom";
+import {  HashRouter, Route } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter >
       <Route path="/" component={App}></Route>
-    </BrowserRouter>
+    </HashRouter >
   </React.StrictMode>,
   document.getElementById("root")
 );
