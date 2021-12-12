@@ -3,6 +3,7 @@ import { useSocket } from "../socket-context";
 import { useTurnContext } from "../turn-context";
 import {  initialBoard } from "../static.utility";
 import { useBoard } from "../board-context";
+import { PlayerServerInfo } from "../types";
 
 export const useStartGame = (
   roomId: string,
@@ -19,7 +20,7 @@ export const useStartGame = (
   useEffect(() => {
 
     if (socket.connected)
-      socket.on("game-started", (firstMoveBy,board) => {
+      socket.on("game-started", (firstMoveBy: PlayerServerInfo,board) => {
         console.log("game started");
         setTurn(firstMoveBy)
         setBoard(board)
