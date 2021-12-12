@@ -88,3 +88,15 @@
   border-color: #fecc30 transparent #fecc30 #fecc30;
   z-index: -1;
 }
+.victory-play-again-button-container{
+  padding: 25px;
+  z-index: 1;
+
+}
+.victory-play-again-button{
+  background-color: transparent;
+  padding: 5px;
+  border-radius: 20px;
+  width: 150px;
+  cursor: pointer;
+}

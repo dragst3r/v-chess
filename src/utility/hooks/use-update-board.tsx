@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useBoard } from "../board-context";
 import { useSocket } from "../socket-context";
+import { emptyPlayer } from "../static.utility";
 import { useTurnContext } from "../turn-context";
 import { PlayerServerInfo } from "../types";
 import { useVictory } from "../victory-contex";
@@ -12,20 +13,24 @@ export const useUpdateBoard = () => {
   const [, setBoardState] = useBoard();
   const [board, setBoard] = useState([]);
   const [, setTurn] = useTurnContext();
-  const [victory, , setWinner] = useVictory();
+  const [victory, , setWinner, restartVictory] = useVictory();
   const emitUpdateBoard = (board: any, victory: boolean) => {
-    console.log(id);
     if (id) {
+      console.log(victory);
       socket.emit("update-board", board, id, victory);
       setBoard(board);
     }
   };
   useEffect(() => {
-    socket.on("board-updated", (board, nextTurn: PlayerServerInfo, victory) => {
-      setBoardState(board);
-      setTurn(nextTurn);
-      if (victory) setWinner(nextTurn);
-    });
+    socket.on(
+      "board-updated",
+      (board, nextTurn: PlayerServerInfo, victory, restart: boolean) => {
+        setBoardState(board);
+        setTurn(nextTurn);
+        if (victory) setWinner(nextTurn);
+        if (restart) restartVictory();
+      }
+    );
   }, [socket, board, victory]);
   return emitUpdateBoard;
 };

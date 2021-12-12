@@ -9,10 +9,13 @@ import { useTurnContext } from "../../utility/turn-context";
 import { useUser } from "../../utility/user-context";
 import BoardPlayer from "../board-player/board-player.component";
 import { useScreenSize } from "../../utility/hooks/use-screen-size";
+import { PlayerServerInfo } from "../../utility/types";
 
-interface Props {}
+interface Props {
+  users: PlayerServerInfo[]
+}
 
-const Board: React.FC<Props> = () => {
+const Board: React.FC<Props> = ({users}) => {
   const [board] = useBoard();
   const [gameOver] = useVictory();
   const [turn, setTurn] = useTurnContext();
@@ -23,7 +26,7 @@ const Board: React.FC<Props> = () => {
     <div className="board-and-players-container">
         <BoardPlayer turn={turn.side} side="king" />
       <div className="board-container">
-        {gameOver && <Victory />}
+        {gameOver && <Victory users={users}/>}
         <div className="board">
           {board.map((m, i) => (
             <Field

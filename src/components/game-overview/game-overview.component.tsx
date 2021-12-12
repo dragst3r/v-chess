@@ -16,7 +16,7 @@ const GameOverview: React.FC<Props> = ({users}) => {
   return (
     <div className="game-overview">
         <SelectedFieldContextProvider>
-          <VictoryContextProvider>{users && <Board />}</VictoryContextProvider>
+          <VictoryContextProvider>{users && <Board users={users} />}</VictoryContextProvider>
         </SelectedFieldContextProvider>
     </div>
   );
