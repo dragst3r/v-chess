@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSocket } from "../socket-context";
 import { useTurnContext } from "../turn-context";
-import {  initialBoard } from "../static.utility";
+import {  iField, initialBoard } from "../static.utility";
 import { useBoard } from "../board-context";
 import { PlayerServerInfo } from "../types";
 
@@ -20,7 +20,7 @@ export const useStartGame = (
   useEffect(() => {
 
     if (socket.connected)
-      socket.on("game-started", (firstMoveBy: PlayerServerInfo,board) => {
+      socket.on("game-started", (firstMoveBy: PlayerServerInfo,board:iField[]) => {
         console.log("game started");
         setTurn(firstMoveBy)
         setBoard(board)
