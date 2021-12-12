@@ -11,7 +11,7 @@ const SocketContextProvider: React.FC = ({ children }) => {
     {} as Socket
   );
   useEffect(() => {
-    const newSocket = io("https://v-chess-server.herokuapp.com/");
+    const newSocket = io("https://v-chess-server.herokuapp.com");
     setSocket(newSocket);
     return () => {
       newSocket.close();
